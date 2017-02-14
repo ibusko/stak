@@ -30,6 +30,15 @@ Cosmic Ray Rejections:
 
   noao.imred.crutil.rst
   
+Isophote:
+
+.. toctree::
+  :maxdepth: 1
+
+  isophote_example1.rst
+  isophote_example2.rst
+  isophote_example3.rst
+
 Index
 -----
 

@@ -56,7 +56,7 @@ block filter.
 
 Just added to ccdproc.. wrapper around astropy functions
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -64,7 +64,7 @@ Just added to ccdproc.. wrapper around astropy functions
     # Astronomy Specific Imports
     from astropy.nddata.utils import block_reduce
 
-.. code:: python
+.. code:: ipython2
 
     data = np.arange(128).reshape(8, 4, 4)
     block_reduce(data, [2,2,2], func=np.mean)
@@ -99,7 +99,7 @@ any examples in this notebook \*\*
 The talks ``blkrep`` is used to block replicate an n-dimensional image.
 Astropy has the equivalent function ``block_replicate``.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -107,7 +107,7 @@ Astropy has the equivalent function ``block_replicate``.
     # Astronomy Specific Imports
     from astropy.nddata.utils import block_replicate
 
-.. code:: python
+.. code:: ipython2
 
     # test data
     my_arr = np.array(([[0., 1.], [2., 3.]]))
@@ -150,12 +150,12 @@ Tasks used to transpose images.
 `numpy.transpose <https://docs.scipy.org/doc/numpy/reference/generated/numpy.transpose.html>`__
 can handle any number of dimensions.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
 
-.. code:: python
+.. code:: ipython2
 
     in_array = np.arange(15).reshape(5,3)
     out_array = np.transpose(in_array)
@@ -199,13 +199,13 @@ where you can shift in any axis of your image. See the
 `Notes <#notes>`__ at the top of the notebook for fitting and boundary
 options.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
     from scipy.ndimage import shift
 
-.. code:: python
+.. code:: ipython2
 
     # Don't forget that Python uses (y,x) format when specifiying shifts
     in_array = np.arange(25).reshape(5,5)
@@ -249,13 +249,13 @@ spine3, sinc, lsinc, and drizzle. We will be using
 as a python equivalent. For this task, the available interpolation
 options are nearest, and spline0-5 fits.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
     from scipy.ndimage import zoom
 
-.. code:: python
+.. code:: ipython2
 
     # Don't forget that Python uses (y,x) format when specifiying magnification
     in_array = np.arange(25).reshape(5,5)
@@ -299,13 +299,13 @@ we will use
 
 Rotation using interpolation:
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
     from scipy.ndimage import rotate
 
-.. code:: python
+.. code:: ipython2
 
     in_array = np.arange(25).reshape(5,5)
     # Rotate by 60 degrees
@@ -337,12 +337,12 @@ Rotation using interpolation:
 
 Rotation in increments of 90 degrees:
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
 
-.. code:: python
+.. code:: ipython2
 
     in_array = np.arange(25).reshape(5,5)
     # Rotate by 270 degrees
