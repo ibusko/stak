@@ -1,1 +1,1 @@
-__author__ = 'busko'
+from .ellipse import *
