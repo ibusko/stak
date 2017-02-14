@@ -4,10 +4,10 @@ import math
 
 import numpy as np
 
-from ellipse.geometry import normalize_angle
-from ellipse.harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_function
-from ellipse.sample import Sample
-from ellipse.isophote import Isophote, CentralPixel
+from .geometry import normalize_angle
+from .harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_function
+from .sample import Sample
+from .isophote import Isophote, CentralPixel
 
 PI2 = np.pi / 2
 MAX_EPS = 0.95

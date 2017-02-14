@@ -5,8 +5,8 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from ellipse.geometry import Geometry
-from ellipse.centerer import Centerer
+from ..ellipse.geometry import Geometry
+from ..ellipse.centerer import Centerer
 
 DATA = "data/"
 

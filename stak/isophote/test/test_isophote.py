@@ -5,10 +5,10 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from util import build_test_data
-from ellipse.sample import Sample
-from ellipse.fitter import Fitter
-from ellipse.isophote import Isophote, IsophoteList
+from ..util import build_test_data
+from ..ellipse.sample import Sample
+from ..ellipse.fitter import Fitter
+from ..ellipse.isophote import Isophote, IsophoteList
 
 
 class TestIsophote(unittest.TestCase):

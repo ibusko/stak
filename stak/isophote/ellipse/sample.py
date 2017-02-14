@@ -4,8 +4,8 @@ import copy
 
 import numpy as np
 
-from ellipse.geometry import Geometry, DEFAULT_EPS, DEFAULT_STEP, PHI_MIN
-from ellipse.integrator import integrators, BI_LINEAR
+from .geometry import Geometry, DEFAULT_EPS, DEFAULT_STEP, PHI_MIN
+from .integrator import integrators, BI_LINEAR
 
 DEFAULT_SCLIP = 3.
 

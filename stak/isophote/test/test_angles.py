@@ -5,7 +5,7 @@ import math
 import numpy as np
 import unittest
 
-from ellipse.geometry import PHI_MAX, PHI_MIN
+from ..ellipse.geometry import PHI_MAX, PHI_MIN
 
 
 def el_sarea (a, eps, phi, r):

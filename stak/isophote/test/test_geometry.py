@@ -4,7 +4,7 @@ import unittest
 
 import numpy as np
 
-from ellipse.geometry import Geometry, normalize_angle
+from ..ellipse.geometry import Geometry, normalize_angle
 
 
 class TestGeometry(unittest.TestCase):

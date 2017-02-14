@@ -8,8 +8,8 @@ from astropy.io import fits
 
 from astropy.table import Table
 
-from ellipse.ellipse import Ellipse
-from ellipse.integrator import BI_LINEAR, MEAN
+from ..ellipse.ellipse import Ellipse
+from ..ellipse.integrator import BI_LINEAR, MEAN
 
 DATA = "data/"
 

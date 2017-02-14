@@ -4,7 +4,7 @@ import sys
 import numpy as np
 from scipy.interpolate import LSQUnivariateSpline
 
-from ellipse.geometry import Geometry, PHI_MIN
+from .geometry import Geometry, PHI_MIN
 
 
 def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):

@@ -5,14 +5,14 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from util import build_test_data
-from ellipse.geometry import Geometry
-from ellipse.integrator import MEAN
-from ellipse.fitter import TOO_MANY_FLAGGED
-from ellipse.ellipse import Ellipse, FIXED_ELLIPSE, FAILED_FIT
-from ellipse.isophote import Isophote, IsophoteList
+from ..util import build_test_data
+from ..util.build_test_data import DEFAULT_POS, DEFAULT_SIZE
+from ..ellipse.geometry import Geometry, DEFAULT_EPS
+from ..ellipse.integrator import MEAN
+from ..ellipse.fitter import TOO_MANY_FLAGGED
+from ..ellipse.ellipse import Ellipse, FIXED_ELLIPSE, FAILED_FIT
+from ..ellipse.isophote import Isophote, IsophoteList
 
-from util.build_test_data import DEFAULT_POS, DEFAULT_SIZE, DEFAULT_EPS
 
 # define an off-center position and a tilted sma
 POS = DEFAULT_POS + DEFAULT_SIZE / 4

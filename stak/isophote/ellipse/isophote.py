@@ -2,7 +2,7 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 
 import numpy as np
 
-from ellipse.harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_function, fit_upper_harmonic
+from .harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_function, fit_upper_harmonic
 
 
 def print_header(verbose=False):

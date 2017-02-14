@@ -5,8 +5,8 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from ellipse.sample import Sample
-from ellipse.integrator import NEAREST_NEIGHBOR, BI_LINEAR, MEAN, MEDIAN
+from ..ellipse.sample import Sample
+from ..ellipse.integrator import NEAREST_NEIGHBOR, BI_LINEAR, MEAN, MEDIAN
 
 
 class TestIntegrator(unittest.TestCase):

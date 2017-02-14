@@ -4,10 +4,10 @@ import unittest
 
 import numpy as np
 
-from util import build_test_data
-from ellipse.integrator import MEDIAN, MEAN, BI_LINEAR, NEAREST_NEIGHBOR
-from ellipse.sample import Sample
-from ellipse.isophote import Isophote
+from ..util import build_test_data
+from ..ellipse.integrator import MEDIAN, MEAN, BI_LINEAR, NEAREST_NEIGHBOR
+from ..ellipse.sample import Sample
+from ..ellipse.isophote import Isophote
 
 
 test_data = build_test_data.build(background=100., i0=0., noise=10.)

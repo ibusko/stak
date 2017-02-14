@@ -2,13 +2,13 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 
 import numpy as np
 
-from ellipse.geometry import Geometry, DEFAULT_STEP, DEFAULT_EPS
-from ellipse.integrator import BI_LINEAR
-from ellipse.sample import Sample, CentralSample, DEFAULT_SCLIP
-from ellipse.fitter import Fitter, CentralFitter, TOO_MANY_FLAGGED, \
+from .geometry import Geometry, DEFAULT_STEP, DEFAULT_EPS
+from .integrator import BI_LINEAR
+from .sample import Sample, CentralSample, DEFAULT_SCLIP
+from .fitter import Fitter, CentralFitter, TOO_MANY_FLAGGED, \
     DEFAULT_CONVERGENCY, DEFAULT_MINIT, DEFAULT_MAXIT, DEFAULT_FFLAG, DEFAULT_MAXGERR
-from ellipse.isophote import Isophote, IsophoteList, print_header
-from ellipse.centerer import Centerer, DEFAULT_THRESHOLD
+from .isophote import Isophote, IsophoteList, print_header
+from .centerer import Centerer, DEFAULT_THRESHOLD
 
 
 FIXED_ELLIPSE = 4
@@ -65,7 +65,7 @@ class Ellipse():
 
     with n = 3 and n = 4. The corresponding amplitudes (A3, B3, A4, B4), divided by the semi-major
     axis length and local intensity gradient, measure the isophote's deviations from perfect
-    ellipticity (the amplitudes divided by semi-major axis and gradient, are the actual quantities
+    ellipticity (these amplitudes, divided by semi-major axis and gradient, are the actual quantities
     stored in the output Isophote instance).
 
     The algorithm then measures the integrated intensity and the number of non-flagged pixels inside
@@ -85,10 +85,10 @@ class Ellipse():
     process described above), the axis length is incremented/decremented following a pre-defined
     rule. At each step, the starting, first guess ellipse parameters are taken from the previously
     fitted ellipse that has the closest semi-major axis length to the current one. On low surface
-    brightness regions (i.e., those having large radii), the small values of the image radial
-    gradient can induce large corrections and meaningless values for the ellipse parameters. The
-    algorithm has capabilities to stop increasing semi-major axis based on several criteria, including
-    signal-to-noise ratio.
+    brightness regions (those having large radii), the small values of the image radial gradient can
+    induce large corrections and meaningless values for the ellipse parameters. The algorithm has
+    the ability to stop increasing semi-major axis based on several criteria, including signal-to-noise
+    ratio.
 
     See documentation of class Isophote for the meaning of the stop code reported after each fit.
 
@@ -109,7 +109,7 @@ class Ellipse():
     the algorithm can be decreased by decreasing the value of the object centerer threshold parameter.
     The centerer works by looking to where a quantity akin to a signal-to-noise ratio is maximized within
     the 10 X 10 window. The centerer can thus be shut off entirely by setting the threshold to a large
-    value >> 1.
+    value >> 1 (meaning, no location inside the search window will achieve that signal-to-noise ratio).
 
     A note of caution: the algorithm was designed explicitly with a (elliptical) galaxy brightness
     distribution in mind. In particular, a well defined negative radial intensity gradient across
