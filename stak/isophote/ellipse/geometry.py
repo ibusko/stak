@@ -44,23 +44,27 @@ def _area(sma, eps, phi, r):
 
 
 class Geometry(object):
+    '''
+    This is basically a container that allows storage of all parameters
+    associated with a given ellipse's geometry.
 
+    Parameters that describe the relationship of a given ellipse with
+    other associated ellipses are also encapsulated in this container.
+    These associated ellipses may include e.g. the two (inner and outer)
+    bounding ellipses that are used to build sectors along the elliptical
+    path. These sectors are used as areas for integrating pixel values,
+    when area integration mode (mean or median) is used.
+
+    The Geometry object also keeps track of *where* in the ellipse we are,
+    when performing an 'extract' operation. This is mostly relevant when
+    using an area integration mode (as opposed to a pixel integration mode)
+    '''
     def __init__(self, x0, y0, sma, eps, pa, astep=DEFAULT_STEP, linear_growth=False):
         '''
-        This is basically a container that allows storage of all parameters
-        associated with a given ellipse's geometry.
+        Constructor
 
-        Parameters that describe the relationship of a given ellipse with
-        other associated ellipses are also encapsulated in this container.
-        These associated ellipses may include e.g. the two (inner and outer)
-        bounding ellipses that are used to build sectors along the elliptical
-        path. These sectors are used as areas for integrating pixel values,
-        when area integration mode (mean or median) is used.
-
-        The Geometry object also keeps track of *where* in the ellipse we are,
-        when performing an 'extract' operation. This is mostly relevant when
-        using an area integration mode (as opposed to a pixel integration mode)
-
+        Parameters
+        ----------
         :param x0: float
             center coordinate in pixels along image row
         :param y0: float

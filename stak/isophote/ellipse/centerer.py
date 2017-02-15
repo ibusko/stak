@@ -48,11 +48,34 @@ class Centerer(object):
     '''
     Object centerer.
 
+    The fit algorithm has no way of finding where, in the input image frame,
+    the galaxy to be measured sits in. The center X,Y coordinates need to be
+    close to the actual center for the fit to work. An "object centerer"
+    function helps to verify that the selected position can be used as starting
+    point. This function scans a 10 X 10 window centered either on the X,Y
+    coordinates in the Geometry instance passed to the constructor of the
+    Ellipse class, or, if any one of them, or both, are set to None, on the
+    input image frame center. In case a successful acquisition takes place,
+    the Geometry instance is modified in place to reflect the solution of
+    the object centerer algorithm.
+
+    In some cases the object centerer algorithm may fail, even though there
+    is enough signal-to-noise to start a fit (e.g. in objects with very high
+    ellipticity). In those cases the sensitivity of the algorithm can be
+    decreased by decreasing the value of the object centerer threshold
+    parameter.The centerer works by looking to where a quantity akin to a
+    signal-to-noise ratio is maximized within the 10 X 10 window. The
+    centerer can thus be shut off entirely by setting the threshold to
+    a large value >> 1 (meaning, no location inside the search window will
+    achieve that signal-to-noise ratio).
+
     '''
     def __init__(self, image, geometry, verbose=True):
         '''
-        Object centerer.
+        Constructor
 
+        Parameters
+        ----------
         :param image: np 2-D array
             image array
         :param geometry: instance of Geometry
@@ -60,6 +83,11 @@ class Centerer(object):
             coordinates. These are modified by the centerer algorithm.
         :param verbose: boolean, default True
             print object centering info
+
+        Attributes
+        ----------
+        :param threshold: float
+            the threshold
         '''
         self._image = image
         self._geometry = geometry
@@ -77,11 +105,10 @@ class Centerer(object):
         self._in_mask_npix = np.sum(self._ones_in)
         self._out_mask_npix = np.sum(self._ones_out)
 
-
     def center(self, threshold=DEFAULT_THRESHOLD):
         '''
         Runs the object centerer, eventually modifying in place
-        the geometry associated with this Ellipse instance.
+        the geometry attribute.
 
         :param threshold: float, default = 0.1
             object centerer threshold. To turn off the centerer, set this

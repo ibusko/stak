@@ -16,15 +16,17 @@ def print_header(verbose=False):
 
 
 class Isophote:
-
+    '''
+    This class is basically a container that holds the results of a single isophote fit.
+    The actual extracted sample at the given isophote (sampled intensities along the
+    elliptical path on the image) is kept as an attribute of this class. The container
+    concept helps in segregating information directly related to the sample, from
+    information that more closely relates to the fitting process, such as status codes,
+    errors for isophote parameters (as defined by the old STSDAS code), and the like.
+    '''
     def __init__(self, sample, niter, valid, stop_code):
         '''
-        This class is basically a container that holds the results of a single isophote fit.
-        The actual extracted sample at the given isophote (sampled intensities along the
-        elliptical path on the image) is kept as an attribute of this class. The container
-        concept helps in segregating information directly related to the sample, from
-        information that more closely relates to the fitting process, such as status codes,
-        errors for isophote parameters (as defined by the old STSDAS code), and the like.
+        Constructor
 
         Parameters:
         ----------
@@ -345,7 +347,14 @@ class CentralPixel(Isophote):
     None, or other default value when appropriate.
     '''
     def __init__(self, sample):
+        '''
+        Constructor
 
+        Parameters:
+        ----------
+        :param sample: instance of Sample
+            the sample information
+        '''
         self.sample = sample
         self.niter = 0
         self.valid = True
@@ -406,9 +415,10 @@ class IsophoteList(Isophote, list):
     '''
     def __init__(self, iso_list):
         '''
-        Builds an IsophoteList instance from a (python) list
-        of Isophote instances.
+        Constructor
 
+        Parameters:
+        ----------
         :param iso_list: list
             a list with Isophote instances
         '''
@@ -440,7 +450,8 @@ class IsophoteList(Isophote, list):
         Returns the Isophote instance that has the closest semi-major
         axis length to the passed parameter
 
-
+        Parameters:
+        ----------
         :param sma: float
             a value for the semi-major axis length
         :return: Isophote instance

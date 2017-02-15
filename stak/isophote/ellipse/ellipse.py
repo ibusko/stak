@@ -19,109 +19,124 @@ class Ellipse():
     '''
     This class provides the main access point to the isophote fitting algorithm.
 
-    This algorithm is designed to fit elliptical isophotes to galaxy images. Its main input
-    is a 2-dimensional numpy array with the image. The output is a list of instances of class
-    Isophote. See the documentation for this class for details. For convenience, this list is
-    packaged in an instance of class IsophoteList, which augments the list with isophote-specific
-    features.
+    This algorithm is designed to fit elliptical isophotes to galaxy images. Its
+    main input is a 2-dimensional numpy array with the image. The output is a
+    list of instances of class Isophote. See the documentation for this class
+    for details. For convenience, this list is packaged in an instance of class
+    IsophoteList, which augments the list with isophote-specific features.
 
-    During the fitting process, some of the isophote parameters are displayed in tabular form
-    at the standard output. These parameters allow the user to monitor the fitting process.
+    During the fitting process, some of the isophote parameters are displayed
+    in tabular form at the standard output. These parameters allow the user to
+    monitor the fitting process.
 
-    The image is measured using an iterative method described by Jedrzejewski (Mon.Not.R.Astr.Soc.,
-    226, 747, 1987). Each isophote is fitted at a pre-defined, fixed semi-major axis length.
-    The algorithm starts from a first guess elliptical isophote defined by approximate values for
-    the X and Y center coordinates, ellipticity and position angle. Using these values, the
-    image is sampled along an elliptical path, producing a 1-dimensional function that describes
-    the dependency of intensity (pixel value) with angle (E). The function is stored as a set of
-    1-D numpy arrays. The harmonic content of this function is analyzed by least-squares fitting
-    to the function:
+    The image is measured using an iterative method described by Jedrzejewski
+    (Mon.Not.R.Astr.Soc., 226, 747, 1987). Each isophote is fitted at a pre-defined,
+    fixed semi-major axis length. The algorithm starts from a first guess elliptical
+    isophote defined by approximate values for the X and Y center coordinates,
+    ellipticity and position angle. Using these values, the image is sampled along
+    an elliptical path, producing a 1-dimensional function that describes the
+    dependency of intensity (pixel value) with angle (E). The function is stored
+    as a set of 1-D numpy arrays. The harmonic content of this function is analyzed
+    by least-squares fitting to the function:
 
     y  =  y0 + A1 * sin(E) + B1 * cos(E) + A2 * sin(2 * E) + B2 * cos (2 * E)
 
-    Each one of the harmonic amplitudes A1, B1, A2, B2 is related to a specific ellipse
-    geometric parameter, in the sense that it conveys information regarding how much the current
-    parameter value deviates from the "true" one. To compute this deviation, the image's local
-    radial gradient has to be taken into account too. The algorithm picks up the largest amplitude
-    among the four, estimates the local gradient and computes the corresponding increment in the
-    associated ellipse parameter. That parameter is updated, and the image is resampled. This
-    process is repeated until any one of the following criteria are met:
+    Each one of the harmonic amplitudes A1, B1, A2, B2 is related to a specific
+    ellipse geometric parameter, in the sense that it conveys information regarding
+    how much the current parameter value deviates from the "true" one. To compute
+    this deviation, the image's local radial gradient has to be taken into account
+    too. The algorithm picks up the largest amplitude among the four, estimates the
+    local gradient and computes the corresponding increment in the associated ellipse
+    parameter. That parameter is updated, and the image is resampled. This process
+    is repeated until any one of the following criteria are met:
 
-    1 - the largest harmonic amplitude is less than a given fraction of the rms residual of the
-        intensity data around the harmonic fit.
+    1 - the largest harmonic amplitude is less than a given fraction of the rms
+        residual of the intensity data around the harmonic fit.
 
     2 - a user-specified maximum number of iterations is reached.
 
-    3 - more than a given fraction of the elliptical sample points have no valid data in then,
-        either because they lie outside the image boundaries or because they where flagged out from
-        the fit by sigma-clipping.
+    3 - more than a given fraction of the elliptical sample points have no valid
+        data in then, either because they lie outside the image boundaries or
+        because they where flagged out from the fit by sigma-clipping.
 
-    In any case, a minimum number of iterations is always performed. If iterations stop because
-    of reasons 2 or 3 above, then those ellipse parameters that generated the lowest absolute
-    values for harmonic amplitudes will be used. At this point, the image data sample coming from
-    the best fit ellipse is fitted by the following function:
+    In any case, a minimum number of iterations is always performed. If iterations
+    stop because of reasons 2 or 3 above, then those ellipse parameters that
+    generated the lowest absolute values for harmonic amplitudes will be used. At
+    this point, the image data sample coming from the best fit ellipse is fitted
+    by the following function:
 
     y  =  y0  +  An * sin(n * E)  +  Bn * cos(n * E)
 
-    with n = 3 and n = 4. The corresponding amplitudes (A3, B3, A4, B4), divided by the semi-major
-    axis length and local intensity gradient, measure the isophote's deviations from perfect
-    ellipticity (these amplitudes, divided by semi-major axis and gradient, are the actual quantities
-    stored in the output Isophote instance).
+    with n = 3 and n = 4. The corresponding amplitudes (A3, B3, A4, B4), divided
+    by the semi-major axis length and local intensity gradient, measure the isophote's
+    deviations from perfect ellipticity (these amplitudes, divided by semi-major axis
+    and gradient, are the actual quantities stored in the output Isophote instance).
 
-    The algorithm then measures the integrated intensity and the number of non-flagged pixels inside
-    the elliptical isophote, and also inside the corresponding circle with same center and radius
-    equal to the semi-major axis length. These parameters, their errors, other associated parameters,
-    and auxiliary information, are stored in the Isophote instance.
+    The algorithm then measures the integrated intensity and the number of
+    non-flagged pixels inside the elliptical isophote, and also inside the
+    corresponding circle with same center and radius equal to the semi-major
+    axis length. These parameters, their errors, other associated parameters, and
+    auxiliary information, are stored in the Isophote instance.
 
-    Errors in intensity and local gradient are obtained directly from the rms scatter of intensity
-    data along the fitted ellipse. Ellipse geometry errors are obtained from the errors in the
-    coefficients of the 1st and 2nd simultaneous harmonic fit. 3rd and 4th harmonic amplitude errors
-    are obtained in the same way, but only after the 1st and 2nd harmonics are subtracted from the
-    raw data. See error analysis in Busko, I., 1996, Proceedings of the Fifth Astronomical Data
-    Analysis Software and Systems Conference, Tucson, PASP Conference Series v.101, ed. G.H. Jacoby
-    and J. Barnes, p.139-142.
+    Errors in intensity and local gradient are obtained directly from the rms
+    scatter of intensity data along the fitted ellipse. Ellipse geometry errors
+    are obtained from the errors in the coefficients of the 1st and 2nd simultaneous
+    harmonic fit. 3rd and 4th harmonic amplitude errors are obtained in the same
+    way, but only after the 1st and 2nd harmonics are subtracted from the raw data.
+    See error analysis in Busko, I., 1996, Proceedings of the Fifth Astronomical Data
+    Analysis Software and Systems Conference, Tucson, PASP Conference Series v.101,
+    ed. G.H. Jacoby and J. Barnes, p.139-142.
 
-    After fitting the ellipse that corresponds to a given value of the semi-major axis (by the
-    process described above), the axis length is incremented/decremented following a pre-defined
-    rule. At each step, the starting, first guess ellipse parameters are taken from the previously
-    fitted ellipse that has the closest semi-major axis length to the current one. On low surface
-    brightness regions (those having large radii), the small values of the image radial gradient can
-    induce large corrections and meaningless values for the ellipse parameters. The algorithm has
-    the ability to stop increasing semi-major axis based on several criteria, including signal-to-noise
-    ratio.
+    After fitting the ellipse that corresponds to a given value of the semi-major
+    axis (by the process described above), the axis length is incremented/decremented
+    following a pre-defined rule. At each step, the starting, first guess ellipse
+    parameters are taken from the previously fitted ellipse that has the closest
+    semi-major axis length to the current one. On low surface brightness regions
+    (those having large radii), the small values of the image radial gradient can
+    induce large corrections and meaningless values for the ellipse parameters.
+    The algorithm has the ability to stop increasing semi-major axis based on several
+    criteria, including signal-to-noise ratio.
 
-    See documentation of class Isophote for the meaning of the stop code reported after each fit.
+    See documentation of class Isophote for the meaning of the stop code reported
+    after each fit.
 
-    The fit algorithm provides a k-sigma clipping algorithm for cleaning deviant sample points at each
-    isophote, thus improving convergency stability against any non-elliptical structure such as stars,
-    spiral arms, HII regions, defects, etc.
+    The fit algorithm provides a k-sigma clipping algorithm for cleaning deviant
+    sample points at each isophote, thus improving convergency stability against
+    any non-elliptical structure such as stars, spiral arms, HII regions, defects, etc.
 
-    The fit algorithm has no way of finding where, in the input image frame, the galaxy to be measured
-    sits in. The center X,Y coordinates need to be close to the actual center for the fit to work. An
-    "object centerer" function helps to verify that the selected position can be used as starting point.
-    This function scans a 10 X 10 window centered either on the X,Y coordinates in the Geometry instance
-    passed to the constructor of the Ellipse class, or, if any one of them, or both, are set to None,
-    on the input image frame center. In case a successful acquisition takes place, the Geometry instance
-    is modified in place to reflect the solution of the object centerer algorithm.
+    The fit algorithm has no way of finding where, in the input image frame, the
+    galaxy to be measured sits in. The center X,Y coordinates need to be close to
+    the actual center for the fit to work. An "object centerer" function helps to
+    verify that the selected position can be used as starting point. This function
+    scans a 10 X 10 window centered either on the X,Y coordinates in the Geometry
+    instance passed to the constructor of the Ellipse class, or, if any one of them,
+    or both, are set to None, on the input image frame center. In case a successful
+    acquisition takes place, the Geometry instance is modified in place to reflect
+    the solution of the object centerer algorithm.
 
-    In some cases the object centerer algorithm may fail, even though there is enough signal-to-noise
-    to start a fit (e.g. in objects with very high ellipticity). In those cases the sensitivity of
-    the algorithm can be decreased by decreasing the value of the object centerer threshold parameter.
-    The centerer works by looking to where a quantity akin to a signal-to-noise ratio is maximized within
-    the 10 X 10 window. The centerer can thus be shut off entirely by setting the threshold to a large
-    value >> 1 (meaning, no location inside the search window will achieve that signal-to-noise ratio).
+    In some cases the object centerer algorithm may fail, even though there is enough
+    signal-to-noise to start a fit (e.g. in objects with very high ellipticity).
+    In those cases the sensitivity of the algorithm can be decreased by decreasing
+    the value of the object centerer threshold parameter. The centerer works by
+    looking to where a quantity akin to a signal-to-noise ratio is maximized within
+    the 10 X 10 window. The centerer can thus be shut off entirely by setting the
+    threshold to a large value >> 1 (meaning, no location inside the search window
+    will achieve that signal-to-noise ratio).
 
-    A note of caution: the algorithm was designed explicitly with a (elliptical) galaxy brightness
-    distribution in mind. In particular, a well defined negative radial intensity gradient across
-    the region being fitted is paramount for the achievement of stable solutions. Use of the
-    algorithm in other types of images (e.g., planetary nebulae) may lead to inability to converge
-    to any acceptable solution.
+    A note of caution: the 'ellipse' fitting algorithm was designed explicitly
+    with a (elliptical) galaxy brightness distribution in mind. In particular, a
+    well defined negative radial intensity gradient across the region being fitted
+    is paramount for the achievement of stable solutions. Use of the algorithm in
+    other types of images (e.g., planetary nebulae) may lead to inability to
+    converge to any acceptable solution.
 
     '''
     def __init__(self, image, geometry=None, threshold=DEFAULT_THRESHOLD, verbose=True):
         '''
         Constructor
 
+        Parameters
+        ----------
         :param image: np 2-D array
             image array
         :param geometry: instance of Geometry

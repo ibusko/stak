@@ -28,8 +28,10 @@ class Fitter(object):
     '''
     def __init__(self, sample):
         '''
-        Create a Fitter instance for a given Sample instance.
+        Constructor
 
+        Parameters
+        ----------
         :param sample: instance of Sample
             the sample to be fitted
         '''

@@ -11,13 +11,17 @@ DEFAULT_SCLIP = 3.
 
 
 class Sample(object):
+    '''
+    A Sample instance describes an elliptical path on the image, from which
+    intensities can be extracted using a selection of integration algorithms.
+
+    The Sample instance contains a 'geometry' attribute that describes its geometry.
+    '''
 
     def __init__(self, image, sma, x0=None, y0=None, astep=DEFAULT_STEP, eps=DEFAULT_EPS, position_angle=0.0,
                  sclip=DEFAULT_SCLIP, nclip=0, linear_growth=False, integrmode=BI_LINEAR, geometry=None):
         '''
-        A Sample instance describes an elliptical path over the image, over which
-        intensities can be extracted using a selection of integration algorithms.
-        The Sample instance contains a 'geometry' attribute that describes its geometry.
+        Constructor
 
         Parameters
         ----------
@@ -256,8 +260,9 @@ class Sample(object):
         return r_angles, r_radii, r_intensities
 
     def update(self):
-        ''' Update this Sample instance with the mean intensity and
-            local gradient values.
+        ''' Update this Sample instance. It calls 'extract' to get the values
+            that match the current Geometry attribute, and then computes the
+            the mean intensity, local gradient, and other associated quantities.
         '''
         step = self.geometry.astep
 

@@ -18,9 +18,12 @@ def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):
     added to each pixel by storing the partial area information in an auxiliary array.
     The information in this array is then used to normalize the pixel intensities.
 
+    Parameters:
+    ----------
     :param image: numpy 2-d array
-        this array must be the same shape as the array used to generate the isophote list,
-        so coordinates will match.
+        input image where the 'isolist' parameter was derived. This array
+        must be the same shape as the array used to generate  the isophote
+        list, so coordinates will match.
     :param isolist: IsophoteList instance
         the list created by class Ellipse
     :param fill: float, default = 0.
