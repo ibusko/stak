@@ -22,19 +22,15 @@ DEFAULT_MAXGERR = 0.5
 
 
 class Fitter(object):
-    '''
+    """
     The main fitter class.
 
-    '''
+    Parameters
+    ----------
+    sample : instance of Sample
+        the sample to be fitted
+    """
     def __init__(self, sample):
-        '''
-        Constructor
-
-        Parameters
-        ----------
-        :param sample: instance of Sample
-            the sample to be fitted
-        '''
         self._sample = sample
 
     def fit(self,
@@ -44,18 +40,20 @@ class Fitter(object):
             fflag         = DEFAULT_FFLAG,
             maxgerr       = DEFAULT_MAXGERR,
             going_inwards = False):
-        '''
+        """
         Perform the actual fit, returning an Isophote instance:
 
             fitter = Fitter(sample)
             isophote = fitter.fit()
 
 
-        :param conver: float, default = 0.05
+        Parameters
+        ----------
+        conver : float, default = 0.05
             main convergency criterion. Iterations stop when the
             largest harmonic amplitude becomes smaller (in absolute
             value) than 'conver' times the harmonic fit rms.
-        :param minit: int, default = 10
+        minit : int, default = 10
             minimum number of iterations to perform. A minimum of 10
             iterations guarantees that, on average, 2 iterations will
             be available for fitting each independent parameter (the
@@ -64,15 +62,15 @@ class Fitter(object):
             to ensure that, even departing from not-so-good initial values,
             the algorithm has a better chance to converge to a sensible
             solution.
-        :param maxit: int, default = 50
+        maxit : int, default = 50
             maximum number of iterations to perform
-        :param fflag: float, default = 0.7
+        fflag : float, default = 0.7
             acceptable fraction of flagged data points in sample.
             If the actual number of valid data points is smaller
             than this, stop iterating and return current Isophote.
             Flagged data points are points that either lie outside
             the image frame, or where rejected by sigma-clipping.
-        :param maxgerr: float, default = 0.5
+        maxgerr : float, default = 0.5
             maximum acceptable relative error in the local radial
             intensity gradient. This is the main control for preventing
             ellipses to grow to regions of too low signal-to-noise ratio.
@@ -96,7 +94,7 @@ class Fitter(object):
             'maxsma' is set to some finite value, and this value is larger
             than the current semi-major axis length, the algorithm enters
             non-iterative mode and proceeds outwards until reaching '.maxsma'.
-        :param going_inwards: boolean, default = False
+        going_inwards : boolean, default = False
             defines the sense of SMA growth. This is used by the Ellipse
             class for defining stopping criteria that depend on the gradient
             relative error. When fitting just one isophote, this parameter
@@ -104,10 +102,13 @@ class Fitter(object):
             elliptical arc segments ("sectors") are extracted from the image,
             when using area extraction modes (see parameter 'integrmode' in
             the Sample class).
-        :return: instance of Isophote
+
+        Returns
+        -------
+        instance of Isophote
             isophote with the fitted sample plus additional fit status
             information
-        '''
+        """
         sample = self._sample
 
         # this flag signals that limiting gradient error ('maxgerr')
@@ -350,12 +351,12 @@ _correctors = [_PositionCorrector_0(),
 
 
 class CentralFitter(Fitter):
-    '''
+    """
     Derived Fitter class, designed specifically to handle the
     case of the central pixel in the galaxy image.
-    '''
+    """
     def fit(self, conver=0.05, minit=10, maxit=50, fflag=0.7, maxgerr=0.5, going_inwards=False):
-        '''
+        """
         Overrides the base class to perform just a simple 1-pixel
         extraction at the current x0,y0 position, using bi-linear
         interpolation.
@@ -369,7 +370,7 @@ class CentralFitter(Fitter):
             isophote but just a single intensity value at the central
             position. Thus, most of its attributes are hardcoded to
             None, or other default value when appropriate.
-        '''
+        """
         self._sample.update()
         return CentralPixel(self._sample)
 

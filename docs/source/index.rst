@@ -39,4 +39,5 @@ STAK Package Documentation
   :maxdepth: 2
 
   stak/index.rst
+  stak/isophote/ellipse/index.rst
   notebooks/index.rst

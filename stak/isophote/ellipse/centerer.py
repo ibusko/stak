@@ -69,26 +69,22 @@ class Centerer(object):
     a large value >> 1 (meaning, no location inside the search window will
     achieve that signal-to-noise ratio).
 
+    Parameters
+    ----------
+    image : np 2-D array
+        image array
+    geometry : instance of Geometry
+        geometry that directs the centerer to look at its X/Y
+        coordinates. These are modified by the centerer algorithm.
+    verbose : boolean, default True
+        print object centering info
+
+    Attributes
+    ----------
+    threshold : float
+        the threshold
     '''
     def __init__(self, image, geometry, verbose=True):
-        '''
-        Constructor
-
-        Parameters
-        ----------
-        :param image: np 2-D array
-            image array
-        :param geometry: instance of Geometry
-            geometry that directs the centerer to look at its X/Y
-            coordinates. These are modified by the centerer algorithm.
-        :param verbose: boolean, default True
-            print object centering info
-
-        Attributes
-        ----------
-        :param threshold: float
-            the threshold
-        '''
         self._image = image
         self._geometry = geometry
         self._verbose = verbose
@@ -106,14 +102,16 @@ class Centerer(object):
         self._out_mask_npix = np.sum(self._ones_out)
 
     def center(self, threshold=DEFAULT_THRESHOLD):
-        '''
+        """
         Runs the object centerer, eventually modifying in place
         the geometry attribute.
 
-        :param threshold: float, default = 0.1
+        Parameters
+        ----------
+        threshold : float, default = 0.1
             object centerer threshold. To turn off the centerer, set this
             to a large value >> 1.
-        '''
+        """
         if self._verbose:
             print("Centering on object....   ", end="")
 

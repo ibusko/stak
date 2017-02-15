@@ -10,24 +10,23 @@ MEDIAN = 'median'
 
 
 class Integrator(object):
+    """
+    Base class that supports different kinds of pixel integration methods.
 
+    Parameters
+    ----------
+    image : 2-d numpy array
+         image array
+    geometry : Geometry instance
+        object that encapsulates geometry information about current ellipse
+    angles : list
+        output list; contains the angle values along the elliptical path
+    radii : list
+        output list; contains the radius values along the elliptical path
+    intensities : list
+        output list; contains the extracted intensity values along the elliptical path
+    """
     def __init__(self, image, geometry, angles, radii, intensities):
-        '''
-        Constructor
-
-        Parameters
-        ----------
-        :param image: 2-d numpy array
-             image array
-        :param geometry: Geometry instance
-            object that encapsulates geometry information about current ellipse
-        :param angles: list
-            output list; contains the angle values along the elliptical path
-        :param radii:  list
-            output list; contains the radius values along the elliptical path
-        :param intensities: list
-            output list; contains the extracted intensity values along the elliptical path
-        '''
         self._image = image
         self._geometry = geometry
 
@@ -41,7 +40,7 @@ class Integrator(object):
         self._j_range = range(0, self._image.shape[1] - 1)
 
     def integrate(self, radius, phi):
-        '''
+        """
         The three input lists (angles, radii, intensities) are
         appended with one sample point taken from the image by
         a chosen integration method.
@@ -50,20 +49,20 @@ class Integrator(object):
 
         Parameters
         ----------
-        :param radius: float
+        radius : float
             length of radius vector in pixels
-        :param phi: float
+        phi : float
             polar angle of radius vector
-        '''
+        """
         raise NotImplementedError
 
     def _reset(self):
-        '''
+        """
         Starts the results lists anew.
 
         This method is for internal use and shouldn't
         be used by external callers.
-        '''
+        """
         self._angles = []
         self._radii = []
         self._intensities = []
@@ -74,22 +73,22 @@ class Integrator(object):
         self._intensities.append(sample)
 
     def get_polar_angle_step(self):
-        '''
+        """
         Returns the polar angle step used to walk over the
         elliptical path.
 
         The polar angle step is defined by the actual integrator
         subclass.
 
-        Parameters
-        ----------
-        :return: float
+        Returns
+        -------
+        float
            the polar angle step
-        '''
+        """
         raise NotImplementedError
 
     def get_sector_area(self):
-        '''
+        """
         Returns the area of elliptical sectors where the integration
         takes place.
 
@@ -98,30 +97,31 @@ class Integrator(object):
         fixed constant, or may change along the elliptical path, so
         it's up to the caller to use this information in a correct way.
 
-        Parameters
-        ----------
-        :return: float
+        Returns
+        -------
+        float
            the sector area
-        '''
+        """
         raise NotImplementedError
 
     def is_area(self):
-        '''
+        """
         Returns the type of the integrator.
 
         An area integrator gets it's value from operating over a (generally
         variable) number of pixels that define a finite area that  lays
         around the elliptical path, at a certain point on the image defined
-        by a polar angle and radius values. A non-area integrator, by contrast,
-        integrates over a fixed and normally small area such as the bi-linear
-        type, which integrates over a small, fixed, 5-pixel area. This method
-        checks if the integrator is of the first type or not.
+        by a polar angle and radius values. A pixel integrator, by contrast,
+        integrates over a fixed and normally small area related to a single
+        pixel on the image. An example is the bi-linear integrator, which
+        integrates over a small, fixed, 5-pixel area. This method checks if
+        the integrator is of the first type or not.
 
-        Parameters
-        ----------
-        :return: boolean
+        Returns
+        -------
+        boolean
            True if this is an area integrator, False otherwise
-        '''
+        """
         raise NotImplementedError
 
 

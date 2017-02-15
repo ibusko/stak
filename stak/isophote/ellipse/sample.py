@@ -11,83 +11,78 @@ DEFAULT_SCLIP = 3.
 
 
 class Sample(object):
-    '''
+    """
     A Sample instance describes an elliptical path on the image, from which
     intensities can be extracted using a selection of integration algorithms.
 
     The Sample instance contains a 'geometry' attribute that describes its geometry.
-    '''
 
-    def __init__(self, image, sma, x0=None, y0=None, astep=DEFAULT_STEP, eps=DEFAULT_EPS, position_angle=0.0,
-                 sclip=DEFAULT_SCLIP, nclip=0, linear_growth=False, integrmode=BI_LINEAR, geometry=None):
-        '''
-        Constructor
+    Parameters
+    ----------
+    image : numpy 2-d array
+        pixels
+    sma : float
+        the semi-major axis length in pixels
+    x0 : float, default=None
+        the X coordinate of the ellipse center
+    y0 : foat, default=None
+        the Y coordinate of the ellipse center
+    astep : float, default=0.1
+        step value for growing/shrinking the semi-
+        major axis. It can be expressed either in
+        pixels (when 'linear_growth'=True) or in
+        relative value (when 'linear_growth=False')
+    eps : ellipticity, default=0.2
+         ellipticity
+    pa : float, default=0.0
+         position angle of ellipse in relation to the
+         +X axis of the image array (rotating towards
+         the +Y axis).
+    sclip : float, default=3.0
+         sigma-clip value
+    nclip : int, default=0
+         number of sigma-clip interations. If 0, skip sigma-clipping.
+    linear_growth : boolean, default=False
+        semi-major axis growing/shrinking mode
+    integrmode : string, default=BI_LINEAR
+        area integration mode, as defined in module integrator.py
+    geometry : Geometry instance, default=None
+        the geometry that describes the ellipse. This can be used in
+        lieu of the explicit specification of parameters 'sma', 'x0',
+        'y0', 'eps', etc. In any case, the Geometry instance
+         becomes an attribute of the Sample object.
 
-        Parameters
-        ----------
-        :param image: numpy 2-d array
-            pixels
-        :param sma: float
-            the semi-major axis length in pixels
-        :param x0: float, default=None
-            the X coordinate of the ellipse center
-        :param y0: foat, default=None
-            the Y coordinate of the ellipse center
-        :param astep: float, default=0.1
-            step value for growing/shrinking the semi-
-            major axis. It can be expressed either in
-            pixels (when 'linear_growth'=True) or in
-            relative value (when 'linear_growth=False')
-        :param eps: ellipticity, default=0.2
-             ellipticity
-        :param pa: float, default=0.0
-             position angle of ellipse in relation to the
-             +X axis of the image array (rotating towards
-             the +Y axis).
-        :param sclip: float, default=3.0
-             sigma-clip value
-        :param nclip: int, default=0
-             number of sigma-clip interations. If 0, skip sigma-clipping.
-        :param linear_growth: boolean, default=False
-            semi-major axis growing/shrinking mode
-        :param integrmode: string, default=BI_LINEAR
-            area integration mode, as defined in module integrator.py
-        :param geometry: Geometry instance, default=None
-            the geometry that describes the ellipse. This can be used in
-            lieu of the explicit specification of parameters 'sma', 'x0',
-            'y0', 'eps', etc. In any case, the Geometry instance
-             becomes an attribute of the Sample object.
-
-        Attributes
-        ----------
-        :param values: 2-d numpy array
-            sampled values as a 2-d numpy array
-            with the following structure:
+    Attributes
+    ----------
+    values : 2-d numpy array
+        sampled values as a 2-d numpy array with the following structure:
             values[0] = 1-d array with angles
             values[1] = 1-d array with radii
             values[2] = 1-d array with intensity
-        :param mean: float
-            the mean intensity along the elliptical path
-        :param gradient: float
-            the local radial intensity gradient
-        :param gradient_error: float
-            the error associated with the local radial intensity gradient
-        :param gradient_relative_error: float
-            the relative error associated with the local radial intensity gradient
-        :param sector_area: float
-            the average area of the sectors along the
-            elliptical path where the sample values
-            were integrated from.
-        :param total_points: int
-            the total number of sample values that would
-            cover the entire elliptical path
-        :param actual_points: int
-            the actual number of sample values that were
-            taken from the image. It can be smaller than
-            total_points when the ellipse encompasses
-            regions outside the image, or when signa-clipping
-            removed some of the points.
-        '''
+    mean : float
+        the mean intensity along the elliptical path
+    gradient : float
+        the local radial intensity gradient
+    gradient_error : float
+        the error associated with the local radial intensity gradient
+    gradient_relative_error : float
+        the relative error associated with the local radial intensity gradient
+    sector_area : float
+        the average area of the sectors along the
+        elliptical path where the sample values
+        were integrated from.
+    total_points : int
+        the total number of sample values that would
+        cover the entire elliptical path
+    actual_points : int
+        the actual number of sample values that were
+        taken from the image. It can be smaller than
+        total_points when the ellipse encompasses
+        regions outside the image, or when signa-clipping
+        removed some of the points.
+    """
+    def __init__(self, image, sma, x0=None, y0=None, astep=DEFAULT_STEP, eps=DEFAULT_EPS, position_angle=0.0,
+                 sclip=DEFAULT_SCLIP, nclip=0, linear_growth=False, integrmode=BI_LINEAR, geometry=None):
         self.image = image
         self.integrmode = integrmode
 
@@ -127,13 +122,16 @@ class Sample(object):
         self.actual_points = 0
 
     def extract(self):
-        ''' Build sample by scanning elliptical path over image array
+        """
+        Build sample by scanning elliptical path over image array
 
-            :return: numpy 2-d array
-                contains three elements. Each element is a 1-d
-                array containing respectively angles, radii, and
-                extracted intensity values.
-        '''
+        Returns
+        -------
+        numpy 2-d array
+            contains three elements. Each element is a 1-d
+            array containing respectively angles, radii, and
+            extracted intensity values.
+        """
         # the sample values themselves are kept cached to prevent
         # multiple calls to the integrator code.
         if self.values is not None:
@@ -260,10 +258,10 @@ class Sample(object):
         return r_angles, r_radii, r_intensities
 
     def update(self):
-        ''' Update this Sample instance. It calls 'extract' to get the values
+        """ Update this Sample instance. It calls 'extract' to get the values
             that match the current Geometry attribute, and then computes the
             the mean intensity, local gradient, and other associated quantities.
-        '''
+        """
         step = self.geometry.astep
 
         # Update the mean value first, using extraction from main sample.
@@ -327,12 +325,14 @@ class Sample(object):
         return gradient, gradient_error
 
     def coordinates(self):
-        '''
+        """
         Returns the X-Y coordinates associated with each sampled point.
 
-        :return: 1-D numpy arrays
+        Returns
+        -------
+        1-D numpy arrays
             two arrays with the X and Y coordinates, respectively
-        '''
+        """
         angles = self.values[0]
         radii = self.values[1]
         x = np.zeros(len(angles))
@@ -346,12 +346,15 @@ class Sample(object):
 
 
 class CentralSample(Sample):
-
+    """
+    Derived Sample class, designed specifically to handle the
+    case of the central pixel in the galaxy image.
+    """
     def update(self):
-        ''' Overrides base class so as to update this Sample instance
+        """ Overrides base class so as to update this Sample instance
             with the intensity integrated at the x0,y0 position using
             bi-linear integration. The local gradient is set to None.
-        '''
+        """
         s = self.extract()
         self.mean = s[2][0]
 

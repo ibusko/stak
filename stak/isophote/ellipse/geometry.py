@@ -13,14 +13,19 @@ PHI_MIN = 0.05
 
 
 def normalize_angle(angle):
-    '''
+    """
     Restore angle to valid range (0 - PI).
 
-    :param angle: float
+    Parameters
+    ----------
+    angle : float
          the angle
-    :return:  float
+
+    Returns
+    -------
+    float
          the input angle expressed in the range (0 - PI)
-    '''
+    """
     while angle > np.pi*2:
         angle -= np.pi*2
     if angle > np.pi:
@@ -44,7 +49,7 @@ def _area(sma, eps, phi, r):
 
 
 class Geometry(object):
-    '''
+    """
     This is basically a container that allows storage of all parameters
     associated with a given ellipse's geometry.
 
@@ -58,37 +63,34 @@ class Geometry(object):
     The Geometry object also keeps track of *where* in the ellipse we are,
     when performing an 'extract' operation. This is mostly relevant when
     using an area integration mode (as opposed to a pixel integration mode)
-    '''
-    def __init__(self, x0, y0, sma, eps, pa, astep=DEFAULT_STEP, linear_growth=False):
-        '''
-        Constructor
 
-        Parameters
-        ----------
-        :param x0: float
-            center coordinate in pixels along image row
-        :param y0: float
-            center coordinate in pixels along image column
-        :param sma: float
-             semi-major axis in pixels
-        :param eps: ellipticity
-             ellipticity
-        :param pa: float, units radians
-             position angle of semi-major axis in relation to the +X axis of
-             the image array (rotating towards the +Y axis). Position angles
-             are defined in the range 0 < PA <= np.pi. Avoid using as starting
-             position angle 'pa0 = 0.', since the fit algorithm may not work
-             properly. When the ellipses are such that position angles are near
-             either extreme of the range, noise can make the solution jump back
-             and forth between successive isophotes, by amounts close to 180
-             degrees.
-        :param astep: float, default = 0.1
-            step value for growing/shrinking the semi-major axis. It can be
-            expressed either in pixels (when 'linear_growth'=True) or in relative
-            value (when 'linear_growth=False')
-        :param linear_growth: boolean, default = False
-            semi-major axis growing/shrinking mode
-        '''
+    Parameters
+    ----------
+    x0 : float
+        center coordinate in pixels along image row
+    y0 : float
+        center coordinate in pixels along image column
+    sma : float
+        semi-major axis in pixels
+    eps : ellipticity
+        ellipticity
+    pa : float, units radians
+        position angle of semi-major axis in relation to the +X axis of
+        the image array (rotating towards the +Y axis). Position angles
+        are defined in the range 0 < PA <= np.pi. Avoid using as starting
+        position angle 'pa0 = 0.', since the fit algorithm may not work
+        properly. When the ellipses are such that position angles are near
+        either extreme of the range, noise can make the solution jump back
+        and forth between successive isophotes, by amounts close to 180
+        degrees.
+    astep : float, default = 0.1
+        step value for growing/shrinking the semi-major axis. It can be
+        expressed either in pixels (when 'linear_growth'=True) or in relative
+        value (when 'linear_growth=False')
+    linear_growth : boolean, default = False
+        semi-major axis growing/shrinking mode
+    """
+    def __init__(self, x0, y0, sma, eps, pa, astep=DEFAULT_STEP, linear_growth=False):
         self.x0  = x0
         self.y0  = y0
         self.sma = sma
@@ -111,18 +113,23 @@ class Geometry(object):
             self.initial_polar_radius = self.radius(self.initial_polar_angle)
 
     def radius(self, angle):
-        '''
+        """
         Given a polar angle, return the corresponding polar radius.
 
-        :param angle: float
+        Parameters
+        ----------
+        angle : float
             polar angle (radians)
-        :return: float
+
+        Returns
+        -------
+        float
             polar radius (pixels)
-        '''
+        """
         return self.sma * (1.-self.eps) / math.sqrt(((1.-self.eps) * math.cos(angle))**2 + (math.sin(angle))**2)
 
     def initialize_sector_geometry(self, phi):
-        '''
+        """
         Initialize geometry attributes associated with an elliptical sector at polar angle 'phi'.
 
         Computes:
@@ -130,11 +137,16 @@ class Geometry(object):
          - sector area (in attribute self.sector_area)
          - sector angular width (in attribute self.sector_angular_width)
 
-        :param phi: float
+        Parameters
+        ----------
+        phi : float
             polar angle (radians) where the sector is located.
-        :return: tuple with two 1-D np arrays
+
+        Returns
+        -------
+        tuple with two 1-D np arrays
             with the X and Y coordinates of each vertex.
-        '''
+        """
 
         # These polar radii bound the region between the inner
         # and outer ellipses that define the sector.
@@ -177,14 +189,16 @@ class Geometry(object):
         return vertex_x, vertex_y
 
     def bounding_ellipses(self):
-        '''
+        """
         Compute the semi-major axis of the two ellipses that bound
         the annulus where integrations take place.
 
-        :return: tuple:
+        Returns
+        -------
+        tuple
             with two floats - the smaller and larger values of
             SMA that define the annulus  bounding ellipses
-        '''
+        """
         if (self.linear_growth):
             a1 = self.sma - self.astep / 2.
             a2 = self.sma + self.astep / 2.
@@ -196,20 +210,22 @@ class Geometry(object):
         return a1, a2
 
     def polar_angle_sector_limits(self):
-        '''
+        """
         Returns the two polar angles that bound the sector.
 
         The two bounding polar angles only become available after
         calling method initialize_sector_geometry(phi).
 
-        :return: tuple:
+        Returns
+        -------
+        tuple
             with two floats - the smaller and larger values of
             polar angle that bound the current sector
-        '''
+        """
         return self._phi1, self._phi2
 
     def to_polar(self, x, y):
-        '''
+        """
         Given x,y coordinates on image grid, returns radius
         and polar angle on ellipse coordinate system. Takes
         care of different definitions for pa and phi:
@@ -221,13 +237,18 @@ class Geometry(object):
         to the semi-major axis length, but to the center position
         and tilt angle only.
 
-        :param x: float
+        Parameters
+        ----------
+        x : float
             image coordinate
-        :param y: float
+        y : float
             image coordinate
-        :return: 2 floats
+
+        Returns
+        -------
+        2 floats
             radius, angle
-        '''
+        """
         x1 = x - self.x0
         y1 = y - self.y0
 
@@ -256,17 +277,22 @@ class Geometry(object):
         return radius, angle
 
     def update_sma(self, step):
-        '''
+        """
         Return an updated value for the semi-major axis, given the
         current value and the updating step value. The step value must
         be managed by the caller so as to support both modes: grow
         outwards, and shrink inwards.
 
-        :param step: float
+        Parameters
+        ----------
+        step : float
             the step value
-        :return: float
+
+        Returns
+        -------
+        float
             the new semi-major axis length
-        '''
+        """
         if self.linear_growth:
             sma = self.sma + step
         else:
@@ -274,18 +300,23 @@ class Geometry(object):
         return sma
 
     def reset_sma(self, step):
-        '''
+        """
         This method should be used whenever one wants to switch the
         direction of semi-major axis growth, from outwards to inwards.
 
-        :param step: float
+        Parameters
+        ----------
+        step : float
             the current step value
-        :return: float, float
+
+        Returns
+        -------
+        2 floats
             the new semi-major axis length and the new step value to
             initiate the semi-major axis length shrink inwards. This
             is the step value that should be used when calling method
             update_sma.
-        '''
+        """
         if self.linear_growth:
             sma = self.sma - step
             step = -step

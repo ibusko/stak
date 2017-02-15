@@ -8,7 +8,7 @@ from .geometry import Geometry, PHI_MIN
 
 
 def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):
-    '''
+    """
     Builds model galaxy image from isophote list.
 
     The algorithm scans the input list, and, for each  ellipse in there, fills up the
@@ -18,23 +18,26 @@ def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):
     added to each pixel by storing the partial area information in an auxiliary array.
     The information in this array is then used to normalize the pixel intensities.
 
-    Parameters:
+    Parameters
     ----------
-    :param image: numpy 2-d array
+    image : numpy 2-d array
         input image where the 'isolist' parameter was derived. This array
         must be the same shape as the array used to generate  the isophote
         list, so coordinates will match.
-    :param isolist: IsophoteList instance
+    isolist : IsophoteList instance
         the list created by class Ellipse
-    :param fill: float, default = 0.
+    fill : float, default = 0.
         constant value to fill empty pixels
-    :param high_harmonics: boolean, default False
+    high_harmonics : boolean, default False
         add higher harmonics (A3,B3,A4,B4) to result?
-    :param verbose: boolean, default True
+    verbose : boolean, default True
         print info
-    :return: numpy 2-D array
+
+    Returns
+    -------
+    numpy 2-D array
         with the model image
-    '''
+    """
     # the target grid is spaced in 0.1 pixel intervals so as
     # to ensure no gaps will result on the output array.
     finely_spaced_sma = np.arange(isolist[0].sma, isolist[-1].sma, 0.1)
