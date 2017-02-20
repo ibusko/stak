@@ -20,8 +20,8 @@ Reference/API
 .. automodapi:: stak.isophote.ellipse
 
 
-FAQ
-===
+Frequently Asked Questions
+==========================
 
 .. include:: faq.rst
 
