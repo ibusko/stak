@@ -36,7 +36,7 @@ STAK Package Documentation
 ============================
 
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 3
 
   stak/index.rst
   stak/isophote/ellipse/index.rst
