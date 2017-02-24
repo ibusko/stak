@@ -101,21 +101,21 @@ Most parameters computed directly at each isophote have their errors computed
 by standard error propagation. Errors in the ellipse geometry parameters, on
 the other hand, cannot be estimated in the same way, since these parameters
 are not computed directly but result from a number of updates from a starting
-guess value. An error analysis based on numerical experiments [2] showed that
+guess value. An error analysis based on numerical experiments [CIT2]_ showed that
 the best error estimators for these geometrical parameters can be found by
 simply "projecting" the harmonic amplitude errors that come from the least-squares
-covariance matrix by the same formulae above (**1**) used to "project" the associated
-parameter updates. In other words, errors for ellipse center, ellipticity and
-position angle are computed by the same formulae as in (**1**), but replacing
-the least-squares amplitudes by their errors. This is empirical and difficult
-to justify in terms of any theoretical error analysis, but showed in practice
-to produce sensible error estimators.
+covariance matrix by the same formulae in **Question 1** above used to "project"
+the associated parameter updates. In other words, errors for ellipse center,
+ellipticity and position angle are computed by the same formulae as in
+**Question 1**, but replacing the least-squares amplitudes by their errors. This
+is empirical and difficult to justify in terms of any theoretical error analysis,
+but showed in practice to produce sensible error estimators.
 
 
 **5 - How is the image sampled?**
 
-When sampling is done using elliptical sectors (mean or median modes),
-Jedrzejewski's method uses an elaborate, high-precision scheme to take into
+When sampling is done using elliptical sectors (mean or median modes), the
+algorithm described in [CIT1]_ uses an elaborate, high-precision scheme to take into
 account partial pixels that lie along elliptical sector boundaries. In the
 current implementation of the `ellipse` algorithm, this method was not implemented.
 Instead, pixels at sector boundaries are either fully included or discarded, depending
@@ -147,9 +147,9 @@ Before starting the main fitting loop, the algorithm runs an "object locator" ro
 around the specified or assumed object coordinates, to check if minimal conditions for
 starting a reasonable fit are met. This routine performs a scan over a 10 X 10 pixel
 window centered on the input object coordinates. At each scan position, it extracts
-two concentric circular samples with radii 4 and 8 pixels, using bi-linear interpolation.
-It computes a signal-to-noise-like criterion using the intensity averages and standard
-deviations at each annulus
+two concentric, roughly circular samples with radii 4 and 8 pixels. It computes a
+signal-to-noise-like criterion using the intensity averages and standard deviations
+at each annulus
 
 .. math::
 
