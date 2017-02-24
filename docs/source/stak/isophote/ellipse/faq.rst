@@ -2,7 +2,7 @@
 
 **1 - What are the basic equations relating harmonic amplitudes to geometrical parameter updates?**
 
-The basic elliptical isophote fitting algorithm, as described in reference [1], computes
+The basic elliptical isophote fitting algorithm, as described in reference [CIT1]_, computes
 corrections for the current ellipse's geometrical parameters by essentially "projecting"
 the fitted harmonic amplitudes onto the image plane:
 
@@ -48,7 +48,7 @@ by the fitting algorithm. As can be seen from the above formulae, small
 I' values lead to large values for the correction terms. Thus, I' errors
 may lead to large fluctuations in these terms, when I' itself is small.
 This happens usually at the fainter, outer regions of galaxy images.
-It was found by numerical experiments [2] that the precision to which a
+It was found by numerical experiments [CIT2]_ that the precision to which a
 given ellipse can be fitted is related to the relative error in the local
 radial gradient.
 
@@ -171,9 +171,9 @@ center coordinates were given to the `ellipse` algorithm.
 
 **REFERENCES**
 
-**[1]** JEDRZEJEWSKI, R., 1987, Mon. Not. R. Astr. Soc., 226, 747.
+.. [CIT1] JEDRZEJEWSKI, R., 1987, Mon. Not. R. Astr. Soc., 226, 747.
 
-**[2]** BUSKO, I., 1996, Proceedings of the Fifth Astronomical Data Analysis Software and Systems
-Conference, Tucson, PASP Conference Series v.101, ed. G.H. Jacoby and J. Barnes, p.139-142.
+.. [CIT2] BUSKO, I., 1996, Proceedings of the Fifth Astronomical Data Analysis Software and Systems
+   Conference, Tucson, PASP Conference Series v.101, ed. G.H. Jacoby and J. Barnes, p.139-142.
 
 

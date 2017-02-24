@@ -33,15 +33,15 @@ class Sample(object):
         pixels (when `linear_growth`=True) or in
         relative value (when `linear_growth=False`)
     eps : ellipticity, default=0.2
-         ellipticity
+        ellipticity
     pa : float, default=0.0
-         position angle of ellipse in relation to the
-         +X axis of the image array (rotating towards
-         the +Y axis).
+        position angle of ellipse in relation to the
+        +X axis of the image array (rotating towards
+        the +Y axis).
     sclip : float, default=3.0
-         sigma-clip value
+        sigma-clip value
     nclip : int, default=0
-         number of sigma-clip interations. If 0, skip sigma-clipping.
+        number of sigma-clip interations. If 0, skip sigma-clipping.
     linear_growth : boolean, default=False
         semi-major axis growing/shrinking mode
     integrmode : string, default=BI_LINEAR
@@ -50,7 +50,7 @@ class Sample(object):
         the geometry that describes the ellipse. This can be used in
         lieu of the explicit specification of parameters `sma`, `x0`,
         `y0`, `eps`, etc. In any case, the Geometry instance
-         becomes an attribute of the Sample object.
+        becomes an attribute of the Sample object.
 
     Attributes
     ----------
@@ -78,8 +78,9 @@ class Sample(object):
         the actual number of sample values that were
         taken from the image. It can be smaller than
         total_points when the ellipse encompasses
-        regions outside the image, or when signa-clipping
+        regions outside the image, or when sigma-clipping
         removed some of the points.
+
     """
     def __init__(self, image, sma, x0=None, y0=None, astep=DEFAULT_STEP, eps=DEFAULT_EPS, position_angle=0.0,
                  sclip=DEFAULT_SCLIP, nclip=0, linear_growth=False, integrmode=BI_LINEAR, geometry=None):
@@ -258,9 +259,10 @@ class Sample(object):
         return r_angles, r_radii, r_intensities
 
     def update(self):
-        """ Update this Sample instance. It calls `extract` to get the values
-            that match the current Geometry attribute, and then computes the
-            the mean intensity, local gradient, and other associated quantities.
+        """
+        Update this Sample instance. It calls `extract` to get the values
+        that match the current Geometry attribute, and then computes the
+        the mean intensity, local gradient, and other associated quantities.
         """
         step = self.geometry.astep
 
@@ -351,9 +353,10 @@ class CentralSample(Sample):
     case of the central pixel in the galaxy image.
     """
     def update(self):
-        """ Overrides base class so as to update this Sample instance
-            with the intensity integrated at the x0,y0 position using
-            bi-linear integration. The local gradient is set to None.
+        """
+        Overrides base class so as to update this Sample instance
+        with the intensity integrated at the x0,y0 position using
+        bi-linear integration. The local gradient is set to None.
         """
         s = self.extract()
         self.mean = s[2][0]
@@ -374,3 +377,40 @@ class CentralSample(Sample):
         self.actual_points = 1
 
         return np.array([np.array(angles), np.array(radii), np.array(intensities)])
+
+
+    # Parameters
+    # ----------
+    # image : numpy 2-d array
+    #     pixels
+    # sma : float
+    #     the semi-major axis length in pixels
+    # x0 : float, default=None
+    #     the X coordinate of the ellipse center
+    # y0 : foat, default=None
+    #     the Y coordinate of the ellipse center
+    # astep : float, default=0.1
+    #     step value for growing/shrinking the semi-
+    #     major axis. It can be expressed either in
+    #     pixels (when `linear_growth`=True) or in
+    #     relative value (when `linear_growth=False`)
+    # eps : ellipticity, default=0.2
+    #     ellipticity
+    # pa : float, default=0.0
+    #     position angle of ellipse in relation to the
+    #     +X axis of the image array (rotating towards
+    #     the +Y axis).
+    # sclip : float, default=3.0
+    #     sigma-clip value
+    # nclip : int, default=0
+    #     number of sigma-clip interations. If 0, skip sigma-clipping.
+    # linear_growth : boolean, default=False
+    #     semi-major axis growing/shrinking mode
+    # integrmode : string, default=BI_LINEAR
+    #     area integration mode, as defined in module integrator.py
+    # geometry : Geometry instance, default=None
+    #     the geometry that describes the ellipse. This can be used in
+    #     lieu of the explicit specification of parameters `sma`, `x0`,
+    #     `y0`, `eps`, etc. In any case, the Geometry instance
+    #      becomes an attribute of the Sample object.
+    #

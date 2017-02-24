@@ -12,7 +12,7 @@ analysis/isophote package formerly found in the STSDAS software.
 The core of the package is the `ellipse` analysis algorithm. It is designed to
 fit elliptical isophotes to galaxy images.
 
-The image is measured using an iterative method described in Ref. [1]. Each isophote
+The image is measured using an iterative method described in [CIT1]_. Each isophote
 is fitted at a pre-defined, fixed semi-major axis length. The algorithm starts from
 a first guess ellipse. The image is sampled along that elliptical path, producing a
 1-dimensional function that describes the dependency of the intensity (pixel value)
