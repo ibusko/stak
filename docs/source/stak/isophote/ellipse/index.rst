@@ -38,6 +38,9 @@ Reference/API
 =============
 
 .. automodapi:: stak.isophote.ellipse
+.. automodapi:: stak.isophote.ellipse.integrator
+.. automodapi:: stak.isophote.ellipse.harmonics
+.. automodapi:: stak.isophote.model
 
 
 Frequently Asked Questions

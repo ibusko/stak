@@ -19,7 +19,7 @@ We start in the same way:
     image = fits.open("../../../stak/isophote/test/data/M51.fits")
     pixel_data = image[0].data
     
-    from ellipse.ellipse import Ellipse
+    from stak.isophote.ellipse.ellipse import Ellipse
     ellipse = Ellipse(pixel_data)
 
 
@@ -138,7 +138,7 @@ Similar to what we did before in notebook 'example1.ipynb':
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10f013908>
+    <matplotlib.text.Text at 0x11033a438>
 
 
 
@@ -200,7 +200,7 @@ Overplot a few "isophotes" on the image display:
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x10fe607f0>]
+    [<matplotlib.lines.Line2D at 0x110f99f28>]
 
 
 
@@ -232,7 +232,7 @@ corresponding position angle.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10fc7d6a0>
+    <matplotlib.text.Text at 0x110f5ab38>
 
 
 
@@ -274,4 +274,5 @@ like this:
 
 
 .. image:: isophote_example2_files/isophote_example2_16_0.png
+
 

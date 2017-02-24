@@ -4,7 +4,7 @@ import sys
 import numpy as np
 from scipy.interpolate import LSQUnivariateSpline
 
-from .geometry import Geometry, PHI_MIN
+from .ellipse.geometry import Geometry, PHI_MIN
 
 
 def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):
@@ -27,7 +27,8 @@ def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):
     isolist : IsophoteList instance
         the list created by class Ellipse
     fill : float, default = 0.
-        constant value to fill empty pixels
+        constant value to fill empty pixels. If an output pixel got no contribution
+        whatsoever from any isophote, it is assigned this value.
     high_harmonics : boolean, default False
         add higher harmonics (A3,B3,A4,B4) to result?
     verbose : boolean, default True

@@ -38,7 +38,7 @@ array with the pixel data as argument to the constructor:
 
 .. code:: ipython3
 
-    from ellipse.ellipse import Ellipse
+    from stak.isophote.ellipse.ellipse import Ellipse
     
     ellipse = Ellipse(pixel_data)
 
@@ -130,7 +130,7 @@ class:
 
 .. parsed-literal::
 
-    ellipse.isophote.IsophoteList
+    stak.isophote.ellipse.isophote.IsophoteList
 
 
 
@@ -148,7 +148,7 @@ semi-major axis length to the method):
 
     isophote = ellipse.fit_isophote(20.)
     
-    from ellipse.isophote import print_header
+    from stak.isophote.ellipse.isophote import print_header
     print_header(verbose=True)
     isophote.print(verbose=True)
 
@@ -176,7 +176,7 @@ IsophoteList as before:
 
 .. parsed-literal::
 
-    ellipse.isophote.Isophote
+    stak.isophote.ellipse.isophote.Isophote
 
 
 
@@ -210,7 +210,7 @@ all data and behavior associated with a given ellipse's geometry.
 .. code:: ipython3
 
     import numpy as np
-    from ellipse.geometry import Geometry
+    from stak.isophote.ellipse.geometry import Geometry
     
     # user defines here the geometry parameters that will be used as first guess.
     x0 = 256.    # center position
@@ -247,8 +247,8 @@ Sample and Fitter classes, as exemplified below.
 
 .. code:: ipython3
 
-    from ellipse.sample import Sample
-    from ellipse.fitter import Fitter
+    from stak.isophote.ellipse.sample import Sample
+    from stak.isophote.ellipse.fitter import Fitter
     
     sample = Sample(pixel_data, 7., geometry=g)
     fitter = Fitter(sample)
@@ -415,7 +415,7 @@ axis length)^1/4 can be done simply as:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10f017ba8>
+    <matplotlib.text.Text at 0x110433080>
 
 
 
@@ -484,7 +484,7 @@ Ellipses can be overplotted on the image display:
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x10fcb1c50>]
+    [<matplotlib.lines.Line2D at 0x1106fc6a0>]
 
 
 
@@ -514,7 +514,7 @@ below shows large contamination from those bright HII regions.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10fc44240>
+    <matplotlib.text.Text at 0x1106f26a0>
 
 
 

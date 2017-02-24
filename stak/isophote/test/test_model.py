@@ -7,7 +7,7 @@ from astropy.io import fits
 
 from ..ellipse.geometry import Geometry
 from ..ellipse.ellipse import Ellipse
-from ..ellipse.model import build_model
+from stak.isophote.model import build_model
 from ..util.build_test_data import build
 
 DATA = "data/"

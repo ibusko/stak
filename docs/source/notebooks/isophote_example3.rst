@@ -21,7 +21,7 @@ We start in the same way as we did in notebook 'example2.ipynb':
     image = fits.open("../../../stak/isophote/test/data/M51.fits")
     pixel_data = image[0].data
     
-    from ellipse.ellipse import Ellipse
+    from stak.isophote.ellipse.ellipse import Ellipse
     ellipse = Ellipse(pixel_data)
     isolist = ellipse.fit_image(sclip=2., nclip=3)
 
@@ -105,7 +105,7 @@ tailor the procedure according to their data and science goal.
 .. code:: ipython3
 
     import numpy as np
-    from ellipse.model import build_model
+    from stak.isophote.model import build_model
     
     model_image = build_model(pixel_data, isolist, fill=np.mean(pixel_data[0:10,0:10]))
 
@@ -156,7 +156,7 @@ Display (just the central, modeled region):
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10fb62d30>
+    <matplotlib.text.Text at 0x110c4bda0>
 
 
 
@@ -182,7 +182,7 @@ Finally, subtract model from data:
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10fc12d68>
+    <matplotlib.text.Text at 0x110cfde10>
 
 
 
@@ -214,7 +214,7 @@ from similar variables defined in the code above).
     image = fits.open("../../../stak/isophote/test/data/M105-S001-RGB.fits")
     pixel_data_e = image[0].data[0]
     
-    from ellipse.geometry import Geometry
+    from stak.isophote.ellipse.geometry import Geometry
     g = Geometry(530., 511, 10., 0.1, 10./180.*np.pi)
     
     ellipse_e = Ellipse(pixel_data_e, geometry=g)
@@ -335,7 +335,7 @@ from similar variables defined in the code above).
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x112ee9c50>]
+    [<matplotlib.lines.Line2D at 0x1130a8278>]
 
 
 
@@ -356,7 +356,7 @@ The residuals in more detail.
 
 .. parsed-literal::
 
-    <matplotlib.image.AxesImage at 0x11b19a518>
+    <matplotlib.image.AxesImage at 0x11c69d9b0>
 
 
 
@@ -389,7 +389,7 @@ Out of curiosity, lets see how the radial profiles look like.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10f5c9e80>
+    <matplotlib.text.Text at 0x11c850668>
 
 
 
@@ -502,7 +502,7 @@ Plot residuals using a very narrow range for the pixel values.
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x11ba8c080>
+    <matplotlib.text.Text at 0x11e6ad940>
 
 
 
