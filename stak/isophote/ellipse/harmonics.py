@@ -52,7 +52,7 @@ def fit_1st_and_2nd_harmonics(phi, intensities):
     phi : np.array
         angles defined in the same way as in harmonic_function
     intensities : np.array
-        intensities measured along the elliptical path, at the angles defined in parameter 'phi'
+        intensities measured along the elliptical path, at the angles defined in parameter `phi`
 
     Returns
     -------
@@ -69,7 +69,7 @@ def fit_1st_and_2nd_harmonics(phi, intensities):
 def fit_upper_harmonic(phi, intensities, order):
     """
     Fits upper harmonic function to a set of angle,intensity pairs.
-    With 'order' set to 3 or 4, the resulting amplitudes, divided
+    With `order` set to 3 or 4, the resulting amplitudes, divided
     by the semi-major axis length and local gradient, measure the
     deviations from perfect ellipticity.
 
@@ -80,7 +80,7 @@ def fit_upper_harmonic(phi, intensities, order):
     phi : np.array
         angles defined in the same way as in harmonic_function
     intensities : np.array
-        intensities measured along the elliptical path, at the angles defined in parameter 'phi'
+        intensities measured along the elliptical path, at the angles defined in parameter `phi`
     order : int
         the order of the harmonic to be fitted.
 

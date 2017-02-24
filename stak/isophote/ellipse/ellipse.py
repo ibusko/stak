@@ -123,7 +123,7 @@ class Ellipse():
     threshold to a large value >> 1 (meaning, no location inside the search window
     will achieve that signal-to-noise ratio).
 
-    A note of caution: the 'ellipse' fitting algorithm was designed explicitly
+    A note of caution: the `ellipse` fitting algorithm was designed explicitly
     with a (elliptical) galaxy brightness distribution in mind. In particular, a
     well defined negative radial intensity gradient across the region being fitted
     is paramount for the achievement of stable solutions. Use of the algorithm in
@@ -143,7 +143,7 @@ class Ellipse():
         the object centerer becomes less strict, in the sense that it will
         accept lower signal-to-noise data. If set to a very large value, the
         centerer is effectively shut off. In this case, either the geometry
-        information supplied by the 'geometry' parameter is used as is, or the
+        information supplied by the `geometry` parameter is used as is, or the
         fit algorithm will terminate prematurely. Note that, once the object
         centerer runs successfully, the X and Y coordinates in the geometry
         instance are modified in place.
@@ -194,7 +194,7 @@ class Ellipse():
         # This parameter list is quite large and should in principle be simplified
         # by re-distributing these controls to somewhere else. We keep this design
         # though because it better mimics the flat architecture used in the original
-        # STSDAS task 'ellipse'.
+        # STSDAS task `ellipse`.
         """
         Main fitting method. Fits multiple isophotes on the image array passed
         to the constructor. This method basically loops over each one of the
@@ -223,18 +223,18 @@ class Ellipse():
             it to stop and revert to fit ellipses with sma < sma0.
         step : float, default = 0.1
             the step value being used to grow/shrink the semi-major
-            axis length (pixels if 'linear=True', or relative value
-            if 'linear=False'). See 'linear' parameter.
+            axis length (pixels if `linear=True`, or relative value
+            if `linear=False`). See `linear` parameter.
         conver : float, default = 0.05
             main convergency criterion. Iterations stop when the
             largest harmonic amplitude becomes smaller (in absolute
-            value) than 'conver' times the harmonic fit rms.
+            value) than `conver` times the harmonic fit rms.
         minit : int, default = 10
             minimum number of iterations to perform. A minimum of 10
             iterations guarantees that, on average, 2 iterations will
             be available for fitting each independent parameter (the
             four harmonic amplitudes and the intensity level). In the
-            first isophote, the minimum number of iterations is 2 * 'minit',
+            first isophote, the minimum number of iterations is 2 * `minit`,
             to ensure that, even departing from not-so-good initial values,
             the algorithm has a better chance to converge to a sensible
             solution.
@@ -252,44 +252,44 @@ class Ellipse():
             ellipses to grow to regions of too low signal-to-noise ratio.
             It specifies the maximum acceptable relative error in the
             local radial intensity gradient. Experiments (see paper
-            quoted in the 'ellipse' help page) showed that the fitting
-            precision relates to that relative error. The usual behavior
-            of the gradient relative error is to increase with semi-major
-            axis, being larger in outer, fainter regions of a galaxy
-            image. In the current implementation, the 'maxgerr' criterion
-            is triggered only when two consecutive isophotes exceed the
+            [2] quoted in the FAQ) showed that the fitting precision
+            relates to that relative error. The usual behavior of the
+            gradient relative error is to increase with semi-major axis,
+            being larger in outer, fainter regions of a galaxy image.
+            In the current implementation, the `maxgerr` criterion is
+            triggered only when two consecutive isophotes exceed the
             value specified in the parameter. This prevents premature
             stopping caused by contamination such as stars and HII
             regions.
             A number of actions may happen when the current gradient
-            error exceeds 'maxgerr' (or becomes non-significant and is
+            error exceeds `maxgerr` (or becomes non-significant and is
             set to None) in the process of increasing semi-major axis
             length. If the maximum semi-major axis specified by parameter
-            'maxsma' is set to None, semi-major axis grow is stopped and
+            `maxsma` is set to None, semi-major axis grow is stopped and
             the algorithm proceeds inwards to the galaxy image center. If
-            'maxsma' is set to some finite value, and this value is larger
+            `maxsma` is set to some finite value, and this value is larger
             than the current semi-major axis length, the algorithm enters
-            non-iterative mode and proceeds outwards until reaching 'maxsma'.
+            non-iterative mode and proceeds outwards until reaching `maxsma`.
         sclip : float, default = 3.0
             sigma-cliping criterion
         nclip : int, default = 0
             number of iterations in sigma-cliping algorithm.
             If zero, ignore sigma-clip.
-        integrmode : string, default = 'bi-linear'
+        integrmode : string, default = `bi-linear`
             area integration mode, as defined in module integrator.py
         linear : boolean, default False
             semi-major axis growing/shrinking mode. If False, geometric
             growing mode is chosen, thus the semi-major axis length is
-            increased by a factor of (1.+'step'), and the process is repeated
+            increased by a factor of (1.+`step`), and the process is repeated
             until either the semi-major axis value reaches the value of
-            parameter 'maxsma', or the last fitted ellipse has more than a
-            given fraction of its sampled points flagged out (see 'fflag').
-            The process then resumes from the first fitted ellipse (at 'sma0')
-            inwards, in steps of (1./(1.+'step')), until the semi- major axis
-            length reaches the value 'minsma'. In case of linear growing, the
-            increment or decrement value is given directly by 'step' in pixels.
-            If 'maxsma' is set to None, the semi-major axis will grow until a
-            low signal-to-noise criterion is met. See 'maxgerr'.
+            parameter `maxsma`, or the last fitted ellipse has more than a
+            given fraction of its sampled points flagged out (see `fflag`).
+            The process then resumes from the first fitted ellipse (at `sma0`)
+            inwards, in steps of (1./(1.+`step`)), until the semi- major axis
+            length reaches the value `minsma`. In case of linear growing, the
+            increment or decrement value is given directly by `step` in pixels.
+            If `maxsma` is set to None, the semi-major axis will grow until a
+            low signal-to-noise criterion is met. See `maxgerr`.
         maxrit : float, default None
             maximum value of semi-major axis to perform an actual fit.
             Whenever the current semi-major axis length is larger than
@@ -344,7 +344,7 @@ class Ellipse():
                 self._fix_last_isophote(isophote_list, -1)
 
                 # get last isophote from the actual list, since the last
-                # 'isophote' instance in this context may no longer be OK.
+                # `isophote` instance in this context may no longer be OK.
                 isophote = isophote_list[-1]
 
                 # if two consecutive isophotes failed to fit,
@@ -366,7 +366,7 @@ class Ellipse():
                             break
 
             # reset variable from the actual list, since the last
-            # 'isophote' instance may no longer be OK.
+            # `isophote` instance may no longer be OK.
             isophote = isophote_list[-1]
             isophote.print(verbose)
 
@@ -393,7 +393,7 @@ class Ellipse():
                 self._fix_last_isophote(isophote_list, 0)
 
             # reset variable from the actual list, since the last
-            # 'isophote' instance may no longer be OK.
+            # `isophote` instance may no longer be OK.
             isophote = isophote_list[-1]
             isophote.print(verbose)
 
@@ -431,7 +431,7 @@ class Ellipse():
         """
         Fit one isophote with a given semi-major axis length.
 
-        The 'step' and 'linear' parameters are not used to actually
+        The `step` and `linear` parameters are not used to actually
         grow or shrink the current fitting semi-major axis length.
         They are necessary nevertheless, so the sampling algorithm
         can know where to start the gradient computation, and also
@@ -448,13 +448,13 @@ class Ellipse():
         conver : float, default = 0.05
             main convergency criterion. Iterations stop when the
             largest harmonic amplitude becomes smaller (in absolute
-            value) than 'conver' times the harmonic fit rms.
+            value) than `conver` times the harmonic fit rms.
         minit : int, default = 10
             minimum number of iterations to perform. A minimum of 10
             iterations guarantees that, on average, 2 iterations will
             be available for fitting each independent parameter (the
             four harmonic amplitudes and the intensity level). In the
-            first isophote, the minimum number of iterations is 2 * 'minit',
+            first isophote, the minimum number of iterations is 2 * `minit`,
             to ensure that, even departing from not-so-good initial values,
             the algorithm has a better chance to converge to a sensible
             solution.
@@ -475,17 +475,17 @@ class Ellipse():
         nclip : int, default = 0
             number of iterations in sigma-cliping algorithm.
             If zero, ignore sigma-clip.
-        integrmode : string, default = 'bi-linear'
+        integrmode : string, default = `bi-linear`
             area integration mode, as defined in module integrator.py
         linear : boolean, default = False
             semi-major axis growing/shrinking mode. When fitting just
             one isophote, this parameter is used only by the code that
             defines the details of how elliptical arc segments ("sectors")
             are extracted from the image, when using area extraction modes
-            (see parameter 'integrmode')
+            (see parameter `integrmode`)
         maxrit : float, default None
             maximum value of semi-major axis to perform an actual fit.
-            If the passed 'sma' value is larger than 'maxrit', the
+            If the passed `sma` value is larger than `maxrit`, the
             isophote wil be just extracted using the current geometry,
             without being fitted. Ignored if None.
             This non-iterative mode may be useful for sampling regions
@@ -498,19 +498,19 @@ class Ellipse():
             signals that the fitting algorithm should be bypassed and an
             isophote should be extracted with the geometry taken directly
             from the most recent Isophote instance stored in the
-            'isophote_list' parameter.
+            `isophote_list` parameter.
             This parameter is mainly used when running the method in a loop
             over different values of semi-major axis length, and we want
             to change from iterative to non-iterative mode somewhere
             along the sequence of isophotes. When set to True, this
             parameter overrides the behavior associated with parameter
-            'maxrit'.
+            `maxrit`.
         going_inwards : boolean, default False
             defines the sense of SMA growth. When fitting just one isophote,
             this parameter is used only by the code that defines the details
             of how elliptical arc segments ("sectors") are extracted from
             the image, when using area extraction modes (see parameter
-            'integrmode')
+            `integrmode`)
         isophote_list : list, default = None
             fitted Isophote instance is appended to this list. Must
             be created and managed by the caller.
@@ -519,7 +519,7 @@ class Ellipse():
         -------
         Isophote instance
             the fitted isophote. The fitted isophote is also appended
-            to the input list passed via parameter 'isophote_list'.
+            to the input list passed via parameter `isophote_list`.
         """
         geometry = self._geometry
 

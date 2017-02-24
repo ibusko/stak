@@ -216,7 +216,7 @@ class _AreaIntegrator(Integrator):
         self._sector_area = self._geometry.sector_area
 
         # step in polar angle to be used by caller next time
-        # when updating the current polar angle 'phi' to point
+        # when updating the current polar angle `phi` to point
         # to the next sector.
         self._phistep = self._geometry.sector_angular_width
 

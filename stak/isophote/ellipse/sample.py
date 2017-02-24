@@ -15,7 +15,7 @@ class Sample(object):
     A Sample instance describes an elliptical path on the image, from which
     intensities can be extracted using a selection of integration algorithms.
 
-    The Sample instance contains a 'geometry' attribute that describes its geometry.
+    The Sample instance contains a `geometry` attribute that describes its geometry.
 
     Parameters
     ----------
@@ -30,8 +30,8 @@ class Sample(object):
     astep : float, default=0.1
         step value for growing/shrinking the semi-
         major axis. It can be expressed either in
-        pixels (when 'linear_growth'=True) or in
-        relative value (when 'linear_growth=False')
+        pixels (when `linear_growth`=True) or in
+        relative value (when `linear_growth=False`)
     eps : ellipticity, default=0.2
          ellipticity
     pa : float, default=0.0
@@ -48,8 +48,8 @@ class Sample(object):
         area integration mode, as defined in module integrator.py
     geometry : Geometry instance, default=None
         the geometry that describes the ellipse. This can be used in
-        lieu of the explicit specification of parameters 'sma', 'x0',
-        'y0', 'eps', etc. In any case, the Geometry instance
+        lieu of the explicit specification of parameters `sma`, `x0`,
+        `y0`, `eps`, etc. In any case, the Geometry instance
          becomes an attribute of the Sample object.
 
     Attributes
@@ -88,7 +88,7 @@ class Sample(object):
 
         if geometry:
             # when the geometry is inherited from somewhere else,
-            # its 'sma' attribute must be replaced by the value
+            # its `sma` attribute must be replaced by the value
             # explicitly passed to the constructor.
             self.geometry = copy.deepcopy(geometry)
             self.geometry.sma = sma
@@ -236,7 +236,7 @@ class Sample(object):
         # Also, they operate on a single array, and we need to operate on
         # three arrays simultaneously. We need something that physically
         # removes the clipped points from the arrays, since that is what
-        # the remaining of the 'ellipse' code expects.
+        # the remaining of the `ellipse` code expects.
         r_angles = []
         r_radii = []
         r_intensities = []
@@ -258,7 +258,7 @@ class Sample(object):
         return r_angles, r_radii, r_intensities
 
     def update(self):
-        """ Update this Sample instance. It calls 'extract' to get the values
+        """ Update this Sample instance. It calls `extract` to get the values
             that match the current Geometry attribute, and then computes the
             the mean intensity, local gradient, and other associated quantities.
         """

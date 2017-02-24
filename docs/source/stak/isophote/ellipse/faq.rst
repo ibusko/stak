@@ -117,7 +117,7 @@ to produce sensible error estimators.
 When sampling is done using elliptical sectors (mean or median modes),
 Jedrzejewski's method uses an elaborate, high-precision scheme to take into
 account partial pixels that lie along elliptical sector boundaries. In the
-current implementation of the `ellipse' algorithm, this method was not implemented.
+current implementation of the `ellipse` algorithm, this method was not implemented.
 Instead, pixels at sector boundaries are either fully included or discarded, depending
 on the precise position of their centers in relation to the elliptical geometric locus
 corresponding to the current ellipse. This design decision is based on two arguments:
@@ -133,11 +133,11 @@ be very effectively removed from the fit by a combination of median sampling and
 sigma-clipping.
 
 
-**6 - How reliable are the fluxes computed by the 'ellipse' algorithm?**
+**6 - How reliable are the fluxes computed by the `ellipse` algorithm?**
 
-The integrated fluxes and areas computed by `ellipse' where checked against results
-produced by the `noao.digiphot.apphot' tasks `phot' and `polyphot', using artificial
-images. Quantities computed by `ellipse' match the reference ones within < 0.1 % in
+The integrated fluxes and areas computed by `ellipse` where checked against results
+produced by the `noao.digiphot.apphot` tasks `phot` and `polyphot`, using artificial
+images. Quantities computed by `ellipse` match the reference ones within < 0.1 % in
 all tested cases.
 
 
@@ -166,7 +166,7 @@ images. It was found that very flattened galaxy images (ellipticity ~ 0.7) canno
 by such a simple algorithm. By increasing the threshold value the object locator becomes more
 strict, in the sense that it will not detect faint objects. To turn the object locator, set
 the threshold to a value >> 1. This will prevent it from modifying whatever values for the
-center coordinates were given to the 'ellipse' algorithm.
+center coordinates were given to the `ellipse` algorithm.
 
 
 **REFERENCES**

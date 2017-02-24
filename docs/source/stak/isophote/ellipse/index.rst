@@ -6,10 +6,10 @@
 ===================================
 Isophote package
 ===================================
-The 'isophote' package in the Space Telescope Astronomy Kit (STAK) replaces the
+The `isophote` package in the Space Telescope Astronomy Kit (STAK) replaces the
 analysis/isophote package formerly found in the STSDAS software.
 
-The core of the package is the 'ellipse' analysis algorithm. It is designed to
+The core of the package is the `ellipse` analysis algorithm. It is designed to
 fit elliptical isophotes to galaxy images.
 
 The image is measured using an iterative method described in Ref. [1]. Each isophote

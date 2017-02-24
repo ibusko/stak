@@ -42,7 +42,7 @@ class Isophote:
             4. small or wrong gradient, or ellipse diverged. Subsequent
                ellipses at larger or smaller semi-major axis may have the
                same constant geometric parameters. It's also used when the
-               user turns off the fitting algorithm via the 'maxrit'
+               user turns off the fitting algorithm via the `maxrit`
                fitting parameter (see Ellipse class).
             5. ellipse diverged; not even the minimum number of iterations
                could be executed. Subsequent ellipses at larger or smaller
@@ -88,7 +88,7 @@ class Isophote:
     npix_e : int
         total number of valid pixels inside ellipse
     tflux_c : float
-        sum of all pixels inside circle with same 'sma' as ellipse
+        sum of all pixels inside circle with same `sma` as ellipse
     npix_c : int
         total number of valid pixels inside circle
     sarea : float
@@ -197,7 +197,7 @@ class Isophote:
 
     def _compute_deviations(self, sample, n):
         # compute deviations from a perfect ellipse, based on the
-        # amplitudes and errors for harmonic 'n'. Note that we first
+        # amplitudes and errors for harmonic `n`. Note that we first
         # subtract the 1st and 2nd harmonics from the raw data.
         try:
             coeffs = fit_1st_and_2nd_harmonics(self.sample.values[0], self.sample.values[2])

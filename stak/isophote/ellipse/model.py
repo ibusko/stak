@@ -21,7 +21,7 @@ def build_model(image, isolist, fill=0., high_harmonics=False, verbose=True):
     Parameters
     ----------
     image : numpy 2-d array
-        input image where the 'isolist' parameter was derived. This array
+        input image where the `isolist` parameter was derived. This array
         must be the same shape as the array used to generate  the isophote
         list, so coordinates will match.
     isolist : IsophoteList instance
