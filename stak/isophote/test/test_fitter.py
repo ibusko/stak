@@ -5,14 +5,14 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from ..util import build_test_data
-from ..util.build_test_data import DEFAULT_POS
-from ..ellipse.geometry import Geometry, DEFAULT_EPS
-from ..ellipse.integrator import MEAN, MEDIAN
-from ..ellipse.harmonics import fit_1st_and_2nd_harmonics
-from ..ellipse.sample import Sample, CentralSample
-from ..ellipse.isophote import Isophote
-from ..ellipse.fitter import Fitter, CentralFitter
+from stak.isophote.util import build_test_data
+from stak.isophote.util.build_test_data import DEFAULT_POS
+from stak.isophote.ellipse.geometry import Geometry, DEFAULT_EPS
+from stak.isophote.ellipse.integrator import MEAN, MEDIAN
+from stak.isophote.ellipse.harmonics import fit_1st_and_2nd_harmonics
+from stak.isophote.ellipse.sample import Sample, CentralSample
+from stak.isophote.ellipse.isophote import Isophote
+from stak.isophote.ellipse.fitter import Fitter, CentralFitter
 
 
 class TestFitter(unittest.TestCase):

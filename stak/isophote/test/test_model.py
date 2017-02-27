@@ -5,10 +5,10 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from ..ellipse.geometry import Geometry
-from ..ellipse.ellipse import Ellipse
+from stak.isophote.ellipse.geometry import Geometry
+from stak.isophote.ellipse.ellipse import Ellipse
 from stak.isophote.model import build_model
-from ..util.build_test_data import build
+from stak.isophote.util.build_test_data import build
 
 DATA = "data/"
 
@@ -16,21 +16,35 @@ DATA = "data/"
 class TestModel(unittest.TestCase):
 
     def test_model(self):
-        name = "M51"
+        name = "M105-S001-RGB"
         test_data = fits.open(DATA + name + ".fits")
-        image = test_data[0].data
-        ellipse = Ellipse(image, verbose=True)
-        isophote_list = ellipse.fit_image(verbose=True)
+        image = test_data[0].data[0]
 
-        model = build_model(image, isophote_list)
+        g = Geometry(530., 511, 10., 0.1, 10./180.*np.pi)
+        ellipse = Ellipse(image, geometry=g, verbose=False, threshold=1.e5)
+        isophote_list = ellipse.fit_image(verbose=False)
+        model = build_model(image, isophote_list, fill=np.mean(image[10:100,10:100]), verbose=False)
 
         self.assertEqual(image.shape, model.shape)
 
+        residual = image - model
+
+        self.assertLessEqual(np.mean(residual),  5.0)
+        self.assertGreaterEqual(np.mean(residual), -5.0)
+
     def test_2(self):
-        pixel_data = build(eps=0.5, pa=np.pi/3., noise=1.e-2)
+        image = build(eps=0.5, pa=np.pi/3., noise=1.e-2)
 
         g = Geometry(256., 256., 10., 0.5, np.pi/3.)
-        ellipse = Ellipse(pixel_data, geometry=g)
-        isolist = ellipse.fit_image()
-        model_image = build_model(pixel_data, isolist, fill=np.mean(pixel_data[0:50,0:50]))
+        ellipse = Ellipse(image, geometry=g, verbose=False, threshold=1.e5)
+        isophote_list = ellipse.fit_image(verbose=False)
+        model = build_model(image, isophote_list, fill=np.mean(image[0:50,0:50]), verbose=False)
+
+        self.assertEqual(image.shape, model.shape)
+
+        residual = image - model
+
+        self.assertLessEqual(np.mean(residual),  5.0)
+        self.assertGreaterEqual(np.mean(residual), -5.0)
+
 

@@ -5,9 +5,9 @@ from scipy.optimize import leastsq
 
 import unittest
 
-from ..util import build_test_data
-from ..ellipse.sample import Sample
-from ..ellipse.harmonics import fit_1st_and_2nd_harmonics, fit_upper_harmonic, first_and_2nd_harmonic_function
+from stak.isophote.util import build_test_data
+from stak.isophote.ellipse.sample import Sample
+from stak.isophote.ellipse.harmonics import fit_1st_and_2nd_harmonics, fit_upper_harmonic, first_and_2nd_harmonic_function
 
 
 class TestHarmonics(unittest.TestCase):

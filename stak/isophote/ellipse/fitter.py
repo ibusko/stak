@@ -13,6 +13,7 @@ PI2 = np.pi / 2
 MAX_EPS = 0.95
 MIN_EPS = 0.05
 TOO_MANY_FLAGGED = 1
+NORMAL_FIT = 0
 
 DEFAULT_CONVERGENCY = 0.05
 DEFAULT_MINIT = 10
@@ -165,7 +166,7 @@ class Fitter(object):
                 # that a minimum of iterations has run.
                 if iter >= minit-1:
                     sample.update()
-                    return Isophote(sample, iter+1, True, 0)
+                    return Isophote(sample, iter+1, True, NORMAL_FIT)
 
             # it may not have converged yet, but the sample contains too
             # many invalid data points: return.

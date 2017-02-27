@@ -5,7 +5,7 @@ import math
 import numpy as np
 import unittest
 
-from ..ellipse.geometry import PHI_MAX, PHI_MIN
+from stak.isophote.ellipse.geometry import PHI_MAX, PHI_MIN
 
 
 def el_sarea (a, eps, phi, r):
@@ -63,8 +63,6 @@ class TestAngles(unittest.TestCase):
 
             phi = phi + min (phistep, 0.5)
             r   = a * (1. - eps) / np.sqrt (((1. - eps) * np.cos (phi))**2 + (np.sin (phi))**2)
-
-        print ( ncount)
 
         self.assertEqual(ncount, 72)
 

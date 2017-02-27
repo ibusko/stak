@@ -8,8 +8,8 @@ from astropy.io import fits
 
 from astropy.table import Table
 
-from ..ellipse.ellipse import Ellipse
-from ..ellipse.integrator import BI_LINEAR, MEAN
+from stak.isophote.ellipse.ellipse import Ellipse
+from stak.isophote.ellipse.integrator import BI_LINEAR, MEAN
 
 DATA = "data/"
 
@@ -61,14 +61,16 @@ class TestRegression(unittest.TestCase):
     def test_regression(self):
 
         self.integrmode = BI_LINEAR
-        # self.integrmode = MEAN
+        # self.integrmode = MEAN # see comment below for the MEAN mode
 
-        self._do_regression("M51")
+        # self._do_regression("M51")
         # self._do_regression("synth")
         # self._do_regression("synth_lowsnr")
-        # self._do_regression("synth_highsnr")
 
-    def _do_regression(self, name):
+        # use this for nightly testing (no printouts)
+        self._do_regression("synth_highsnr", verbose=False)
+
+    def _do_regression(self, name, verbose=True):
 
         table = Table.read(DATA + name + '_table.fits')
         # Original code in spp won't create the right table for the 'mean'.
@@ -78,12 +80,12 @@ class TestRegression(unittest.TestCase):
         # table = Table.read(DATA + name + '_table_mean.fits')
 
         nrows = len(table['SMA'])
-        print(table.columns)
+        # print(table.columns)
 
         image = fits.open(DATA + name + ".fits")
         test_data = image[0].data
-        ellipse = Ellipse(test_data)
-        isophote_list = ellipse.fit_image()
+        ellipse = Ellipse(test_data, verbose=verbose)
+        isophote_list = ellipse.fit_image(verbose=verbose)
         # isophote_list = ellipse.fit_image(integrmode=self.integrmode, sclip=2., nclip=3)
 
         format = "%5.2f  %6.1f    %8.3f %8.3f %8.3f        %9.5f  %6.2f   %6.2f %6.2f   %5.2f   %4d  %3d  %3d  %2d"
@@ -133,11 +135,11 @@ class TestRegression(unittest.TestCase):
             stop_t = table['STOP'][row] if table['STOP'][row] else -1
 
             # relative differences
-            sma_d = (sma_i - sma_t) / sma_t * 100.
+            sma_d = (sma_i - sma_t) / sma_t * 100. if sma_t > 0. else 0.
             intens_d = (intens_i - intens_t) / intens_t * 100.
-            int_err_d = (int_err_i - int_err_t) / int_err_t * 100.
-            pix_stddev_d = (pix_stddev_i - pix_stddev_t) / pix_stddev_t * 100.
-            rms_d = (rms_i - rms_t) / rms_t * 100.
+            int_err_d = (int_err_i - int_err_t) / int_err_t * 100. if int_err_t > 0. else 0.
+            pix_stddev_d = (pix_stddev_i - pix_stddev_t) / pix_stddev_t * 100. if pix_stddev_t > 0. else 0.
+            rms_d = (rms_i - rms_t) / rms_t * 100. if rms_t > 0. else 0.
             ellip_d = (ellip_i - ellip_t) / ellip_t * 100.
             pa_d = pa_i - pa_t  # diff in angle is absolute
             x0_d = x0_i - x0_t  # diff in position is absolute
@@ -148,10 +150,11 @@ class TestRegression(unittest.TestCase):
             niter_d = 0
             stop_d = 0 if stop_i == stop_t else -1
 
-            print("* data "+format % (sma_i, intens_i, int_err_i, pix_stddev_i, rms_i, ellip_i, pa_i, x0_i, y0_i, rerr_i, ndata_i, nflag_i, niter_i, stop_i))
-            print("  ref  "+format % (sma_t, intens_t, int_err_t, pix_stddev_t, rms_t, ellip_t, pa_t, x0_t, y0_t, rerr_t, ndata_t, nflag_t, niter_t, stop_t))
-            print("  diff "+format % (sma_d, intens_d, int_err_d, pix_stddev_d, rms_d, ellip_d, pa_d, x0_d, y0_d, rerr_d, ndata_d, nflag_d, niter_d, stop_d))
-            print()
+            if verbose:
+                print("* data "+format % (sma_i, intens_i, int_err_i, pix_stddev_i, rms_i, ellip_i, pa_i, x0_i, y0_i, rerr_i, ndata_i, nflag_i, niter_i, stop_i))
+                print("  ref  "+format % (sma_t, intens_t, int_err_t, pix_stddev_t, rms_t, ellip_t, pa_t, x0_t, y0_t, rerr_t, ndata_t, nflag_t, niter_t, stop_t))
+                print("  diff "+format % (sma_d, intens_d, int_err_d, pix_stddev_d, rms_d, ellip_d, pa_d, x0_d, y0_d, rerr_d, ndata_d, nflag_d, niter_d, stop_d))
+                print()
 
             if name == "synth_highsnr" and self.integrmode == BI_LINEAR:
                 self.assertLessEqual(abs(x0_d), 0.21)

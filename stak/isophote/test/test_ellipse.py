@@ -5,13 +5,12 @@ import unittest
 import numpy as np
 from astropy.io import fits
 
-from ..util import build_test_data
-from ..util.build_test_data import DEFAULT_POS, DEFAULT_SIZE
-from ..ellipse.geometry import Geometry, DEFAULT_EPS
-from ..ellipse.integrator import MEAN
-from ..ellipse.fitter import TOO_MANY_FLAGGED
-from ..ellipse.ellipse import Ellipse, FIXED_ELLIPSE, FAILED_FIT
-from ..ellipse.isophote import Isophote, IsophoteList
+from stak.isophote.util import build_test_data
+from stak.isophote.util.build_test_data import DEFAULT_POS, DEFAULT_SIZE
+from stak.isophote.ellipse.geometry import Geometry, DEFAULT_EPS
+from stak.isophote.ellipse.fitter import NORMAL_FIT, TOO_MANY_FLAGGED
+from stak.isophote.ellipse.ellipse import Ellipse, FIXED_ELLIPSE, FAILED_FIT
+from stak.isophote.ellipse.isophote import Isophote, IsophoteList
 
 
 # define an off-center position and a tilted sma
@@ -95,7 +94,12 @@ class TestOnRealData(unittest.TestCase):
         image = fits.open(DATA + "M105-S001-RGB.fits")
         test_data = image[0].data[0]
 
-        g = Geometry(530., 511, 10., 0.2, 20./180.*3.14)
+        g = Geometry(530., 511, 50., 0.2, 20./180.*3.14)
 
-        ellipse = Ellipse(test_data, geometry=g)
-        isophote_list = ellipse.fit_image()
+        ellipse = Ellipse(test_data, geometry=g, verbose=False)
+        isophote_list = ellipse.fit_image(verbose=False)
+
+        self.assertEqual(len(isophote_list), 58)
+
+        # check that isophote at about sma=70 got an uneventful fit
+        self.assertEqual(isophote_list.get_closest(70.).stop_code, NORMAL_FIT)
