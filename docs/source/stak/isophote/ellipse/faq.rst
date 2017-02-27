@@ -2,7 +2,7 @@
 
 **1 - What are the basic equations relating harmonic amplitudes to geometrical parameter updates?**
 
-The basic elliptical isophote fitting algorithm, as described in reference [CIT1]_, computes
+The basic elliptical isophote fitting algorithm, as described in reference [1]_, computes
 corrections for the current ellipse's geometrical parameters by essentially "projecting"
 the fitted harmonic amplitudes onto the image plane:
 
@@ -48,7 +48,7 @@ by the fitting algorithm. As can be seen from the above formulae, small
 I' values lead to large values for the correction terms. Thus, I' errors
 may lead to large fluctuations in these terms, when I' itself is small.
 This happens usually at the fainter, outer regions of galaxy images.
-It was found by numerical experiments [CIT2]_ that the precision to which a
+It was found by numerical experiments [2]_ that the precision to which a
 given ellipse can be fitted is related to the relative error in the local
 radial gradient.
 
@@ -101,7 +101,7 @@ Most parameters computed directly at each isophote have their errors computed
 by standard error propagation. Errors in the ellipse geometry parameters, on
 the other hand, cannot be estimated in the same way, since these parameters
 are not computed directly but result from a number of updates from a starting
-guess value. An error analysis based on numerical experiments [CIT2]_ showed that
+guess value. An error analysis based on numerical experiments [2]_ showed that
 the best error estimators for these geometrical parameters can be found by
 simply "projecting" the harmonic amplitude errors that come from the least-squares
 covariance matrix by the same formulae in **Question 1** above used to "project"
@@ -115,7 +115,7 @@ but showed in practice to produce sensible error estimators.
 **5 - How is the image sampled?**
 
 When sampling is done using elliptical sectors (mean or median modes), the
-algorithm described in [CIT1]_ uses an elaborate, high-precision scheme to take into
+algorithm described in [1]_ uses an elaborate, high-precision scheme to take into
 account partial pixels that lie along elliptical sector boundaries. In the
 current implementation of the `ellipse` algorithm, this method was not implemented.
 Instead, pixels at sector boundaries are either fully included or discarded, depending
@@ -171,9 +171,9 @@ center coordinates were given to the `ellipse` algorithm.
 
 **REFERENCES**
 
-.. [CIT1] JEDRZEJEWSKI, R., 1987, Mon. Not. R. Astr. Soc., 226, 747.
+.. [1] JEDRZEJEWSKI, R., 1987, Mon. Not. R. Astr. Soc., 226, 747.
 
-.. [CIT2] BUSKO, I., 1996, Proceedings of the Fifth Astronomical Data Analysis Software and Systems
+.. [2] BUSKO, I., 1996, Proceedings of the Fifth Astronomical Data Analysis Software and Systems
    Conference, Tucson, PASP Conference Series v.101, ed. G.H. Jacoby and J. Barnes, p.139-142.
 
 
