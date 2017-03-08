@@ -11,7 +11,7 @@ from astropy.table import Table
 from stak.isophote.ellipse.ellipse import Ellipse
 from stak.isophote.ellipse.integrator import BI_LINEAR, MEAN
 
-DATA = "data/"
+TEST_DATA = "data/"
 
 
 class TestRegression(unittest.TestCase):
@@ -72,7 +72,7 @@ class TestRegression(unittest.TestCase):
 
     def _do_regression(self, name, verbose=True):
 
-        table = Table.read(DATA + name + '_table.fits')
+        table = Table.read(TEST_DATA + name + '_table.fits')
         # Original code in spp won't create the right table for the 'mean'.
         # integration mode. Use the screen output at synth_table_mean.txt to
         # compare results visually.
@@ -82,7 +82,7 @@ class TestRegression(unittest.TestCase):
         nrows = len(table['SMA'])
         # print(table.columns)
 
-        image = fits.open(DATA + name + ".fits")
+        image = fits.open(TEST_DATA + name + ".fits")
         test_data = image[0].data
         ellipse = Ellipse(test_data, verbose=verbose)
         isophote_list = ellipse.fit_image(verbose=verbose)

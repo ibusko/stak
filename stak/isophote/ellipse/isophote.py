@@ -4,6 +4,8 @@ import numpy as np
 
 from .harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_function, fit_upper_harmonic
 
+__all__ = ['Isophote','IsophoteList']
+
 
 def print_header(verbose=False):
     if verbose:

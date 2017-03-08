@@ -10,6 +10,8 @@ from .fitter import Fitter, CentralFitter, TOO_MANY_FLAGGED, \
 from .isophote import Isophote, IsophoteList, print_header
 from .centerer import Centerer, DEFAULT_THRESHOLD
 
+__all__ = ['Ellipse']
+
 
 FIXED_ELLIPSE = 4
 FAILED_FIT = 5

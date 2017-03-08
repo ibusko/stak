@@ -2,6 +2,8 @@ from __future__ import division
 
 import math
 
+__all__ = ['integrators','NEAREST_NEIGHBOR','BI_LINEAR','MEAN','MEDIAN']
+
 # integration modes
 NEAREST_NEIGHBOR = 'nearest_neighbor'
 BI_LINEAR = 'bi-linear'
@@ -9,7 +11,7 @@ MEAN = 'mean'
 MEDIAN = 'median'
 
 
-class Integrator(object):
+class _Integrator(object):
     """
     Base class that supports different kinds of pixel integration methods.
 
@@ -125,7 +127,7 @@ class Integrator(object):
         raise NotImplementedError
 
 
-class _NearestNeighborIntegrator(Integrator):
+class _NearestNeighborIntegrator(_Integrator):
 
     def integrate(self, radius, phi):
 
@@ -157,7 +159,7 @@ class _NearestNeighborIntegrator(Integrator):
 # sqrt(number of cells) in target pixel
 NCELL = 8
 
-class _BiLinearIntegrator(Integrator):
+class _BiLinearIntegrator(_Integrator):
 
     def integrate(self, radius, phi):
 
@@ -196,7 +198,7 @@ class _BiLinearIntegrator(Integrator):
         return False
 
 
-class _AreaIntegrator(Integrator):
+class _AreaIntegrator(_Integrator):
 
     def __init__(self, image, geometry, angles, radii, intensities):
 

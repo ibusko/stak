@@ -7,6 +7,9 @@ import numpy as np
 from .geometry import Geometry, DEFAULT_EPS, DEFAULT_STEP, PHI_MIN
 from .integrator import integrators, BI_LINEAR
 
+__all__ = ['Sample']
+
+
 DEFAULT_SCLIP = 3.
 
 

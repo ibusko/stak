@@ -10,14 +10,14 @@ from stak.isophote.ellipse.ellipse import Ellipse
 from stak.isophote.model import build_model
 from stak.isophote.util.build_test_data import build
 
-DATA = "data/"
+TEST_DATA = "data/"
 
 
 class TestModel(unittest.TestCase):
 
     def test_model(self):
         name = "M105-S001-RGB"
-        test_data = fits.open(DATA + name + ".fits")
+        test_data = fits.open(TEST_DATA + name + ".fits")
         image = test_data[0].data[0]
 
         g = Geometry(530., 511, 10., 0.1, 10./180.*np.pi)

@@ -3,6 +3,7 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 import numpy as np
 from numpy import ma as ma
 
+__all__ = ['Centerer']
 
 DEFAULT_THRESHOLD = 0.1
 WINDOW_HALF_SIZE = 5

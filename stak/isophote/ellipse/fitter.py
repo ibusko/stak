@@ -9,6 +9,8 @@ from .harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_functio
 from .sample import Sample
 from .isophote import Isophote, CentralPixel
 
+__all__ = ['Fitter']
+
 PI2 = np.pi / 2
 MAX_EPS = 0.95
 MIN_EPS = 0.05

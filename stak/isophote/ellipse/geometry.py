@@ -4,6 +4,8 @@ import math
 
 import numpy as np
 
+__all__ = ['Geometry', 'normalize_angle']
+
 DEFAULT_EPS = 0.2
 DEFAULT_STEP = 0.1
 

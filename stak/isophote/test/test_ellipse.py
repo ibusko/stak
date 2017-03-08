@@ -23,7 +23,7 @@ PA = 10. / 180. * np.pi
 # bet is to build it wherever it's needed. The cost is negligible.
 OFFSET_GALAXY = build_test_data.build(x0=POS, y0=POS, pa=PA, noise=1.E-12)
 
-DATA = "data/"
+TEST_DATA = "data/"
 
 
 class TestEllipse(unittest.TestCase):
@@ -91,7 +91,7 @@ class TestEllipse(unittest.TestCase):
 class TestOnRealData(unittest.TestCase):
 
     def test_basic(self):
-        image = fits.open(DATA + "M105-S001-RGB.fits")
+        image = fits.open(TEST_DATA + "M105-S001-RGB.fits")
         test_data = image[0].data[0]
 
         g = Geometry(530., 511, 50., 0.2, 20./180.*3.14)
