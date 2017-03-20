@@ -7,7 +7,7 @@ from .harmonics import fit_1st_and_2nd_harmonics, first_and_2nd_harmonic_functio
 __all__ = ['Isophote','IsophoteList']
 
 
-def print_header(verbose=False):
+def print_header(verbose=True):
     if verbose:
         print('#')
         print('# Semi-      Isophote         Ellipticity    Position     Grad.   Data  Flag Iter. Stop')
@@ -261,7 +261,7 @@ class Isophote:
     def __repr__(self):
         return "sma=%7.2f" % (self.sma)
 
-    def print(self, verbose=False):
+    def print_data(self, verbose=True):
         if verbose:
             if self.grad_r_error:
                 s = "%7.2f   %9.2f (%5.2f) % 5.3f (%5.3f) %6.2f (%4.1f)  %5.3f  %4i  %4i %4i  %4i"% (self.sample.geometry.sma,
@@ -395,7 +395,7 @@ class CentralPixel(Isophote):
     def x0(self):
         return self.sample.geometry.x0
 
-    def print(self, verbose=False):
+    def print_data(self, verbose=False):
         if verbose:
             s = "   0.00   %9.2f"% (self.intens)
             print(s)
