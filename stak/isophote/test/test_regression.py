@@ -13,6 +13,8 @@ from stak.isophote.ellipse.integrator import BI_LINEAR, MEAN
 
 TEST_DATA = "data/"
 
+verb = False
+
 
 class TestRegression(unittest.TestCase):
     '''
@@ -68,7 +70,7 @@ class TestRegression(unittest.TestCase):
         # self._do_regression("synth_lowsnr")
 
         # use this for nightly testing (no printouts)
-        self._do_regression("synth_highsnr", verbose=False)
+        self._do_regression("synth_highsnr", verbose=verb)
 
     def _do_regression(self, name, verbose=True):
 

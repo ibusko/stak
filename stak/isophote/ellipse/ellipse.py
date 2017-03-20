@@ -315,7 +315,8 @@ class Ellipse():
         # multiple fitted isophotes will be stored here
         isophote_list = []
 
-        print_header(verbose)
+        if verbose:
+            print_header()
 
         # first, go from initial sma outwards until
         # hitting one of several stopping criteria.
@@ -364,13 +365,15 @@ class Ellipse():
                         else:
                             # if no maximum sma, stop growing and change
                             # to go inwards. Print from last kept isophote.
-                            isophote.print_data(verbose)
+                            if verbose:
+                                print(isophote)
                             break
 
             # reset variable from the actual list, since the last
             # `isophote` instance may no longer be OK.
             isophote = isophote_list[-1]
-            isophote.print_data(verbose)
+            if verbose:
+                print(isophote)
 
             # update sma. If exceeded user-defined
             # maximum, bail out from this loop.
@@ -397,7 +400,8 @@ class Ellipse():
             # reset variable from the actual list, since the last
             # `isophote` instance may no longer be OK.
             isophote = isophote_list[-1]
-            isophote.print_data(verbose)
+            if verbose:
+                print(isophote)
 
             # figure out next sma; if exceeded user-defined
             # minimum, or too small, bail out from this loop
@@ -408,7 +412,8 @@ class Ellipse():
         # if user asked for minsma=0, extract special isophote there
         if minsma == 0.0:
             isophote = self.fit_isophote(0.0, isophote_list=isophote_list)
-            isophote.print_data(verbose)
+            if verbose:
+                print(isophote)
 
         # sort list of isophotes according to sma
         isophote_list.sort()

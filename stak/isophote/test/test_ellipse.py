@@ -25,6 +25,8 @@ OFFSET_GALAXY = build_test_data.build(x0=POS, y0=POS, pa=PA, noise=1.E-12)
 
 TEST_DATA = "data/"
 
+verb = False
+
 
 class TestEllipse(unittest.TestCase):
 
@@ -32,8 +34,8 @@ class TestEllipse(unittest.TestCase):
         # centered, tilted galaxy.
         test_data = build_test_data.build(pa=PA)
 
-        ellipse = Ellipse(test_data, verbose=False)
-        isophote_list = ellipse.fit_image(verbose=False)
+        ellipse = Ellipse(test_data, verbose=verb)
+        isophote_list = ellipse.fit_image(verbose=verb)
 
         self.assertIsInstance(isophote_list, IsophoteList)
         self.assertGreater(len(isophote_list), 1)
@@ -49,7 +51,7 @@ class TestEllipse(unittest.TestCase):
     def test_fit_one_ellipse(self):
         test_data = build_test_data.build(pa=PA)
 
-        ellipse = Ellipse(test_data, verbose=False)
+        ellipse = Ellipse(test_data, verbose=verb)
         isophote = ellipse.fit_isophote(40.)
 
         self.assertIsInstance(isophote, Isophote)
@@ -59,17 +61,17 @@ class TestEllipse(unittest.TestCase):
         # A first guess ellipse that is centered in the image frame.
         # This should result in failure since the real galaxy
         # image is off-center by a large offset.
-        ellipse = Ellipse(OFFSET_GALAXY, verbose=False)
-        isophote_list = ellipse.fit_image(verbose=False)
+        ellipse = Ellipse(OFFSET_GALAXY, verbose=verb)
+        isophote_list = ellipse.fit_image(verbose=verb)
 
         self.assertEqual(len(isophote_list), 0)
 
     def test_offcenter_fit(self):
         # A first guess ellipse that is roughly centered on the
         # offset galaxy image.
-        g = Geometry(POS+5, POS+5, 10., DEFAULT_EPS, PA, 0.1, False)
-        ellipse = Ellipse(OFFSET_GALAXY, geometry=g, verbose=False)
-        isophote_list = ellipse.fit_image(verbose=False)
+        g = Geometry(POS+5, POS+5, 10., DEFAULT_EPS, PA, 0.1, verb)
+        ellipse = Ellipse(OFFSET_GALAXY, geometry=g, verbose=verb)
+        isophote_list = ellipse.fit_image(verbose=verb)
 
         # the fit should stop when too many potential sample
         # points fall outside the image frame.
@@ -79,9 +81,9 @@ class TestEllipse(unittest.TestCase):
     def test_offcenter_go_beyond_frame(self):
         # Same as before, but now force the fit to goo
         # beyond the image frame limits.
-        g = Geometry(POS+5, POS+5, 10., DEFAULT_EPS, PA, 0.1, False)
-        ellipse = Ellipse(OFFSET_GALAXY, geometry=g, verbose=False)
-        isophote_list = ellipse.fit_image(maxsma=400., verbose=False)
+        g = Geometry(POS+5, POS+5, 10., DEFAULT_EPS, PA, 0.1, verb)
+        ellipse = Ellipse(OFFSET_GALAXY, geometry=g, verbose=verb)
+        isophote_list = ellipse.fit_image(maxsma=400., verbose=verb)
 
         # the fit should go to maxsma, but with fixed geometry
         self.assertEqual(len(isophote_list), 71)
@@ -96,8 +98,8 @@ class TestOnRealData(unittest.TestCase):
 
         g = Geometry(530., 511, 50., 0.2, 20./180.*3.14)
 
-        ellipse = Ellipse(test_data, geometry=g, verbose=False)
-        isophote_list = ellipse.fit_image(verbose=False)
+        ellipse = Ellipse(test_data, geometry=g, verbose=verb)
+        isophote_list = ellipse.fit_image(verbose=verb)
 
         self.assertEqual(len(isophote_list), 58)
 
