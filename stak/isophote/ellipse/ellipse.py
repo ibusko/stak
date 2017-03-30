@@ -17,7 +17,7 @@ FIXED_ELLIPSE = 4
 FAILED_FIT = 5
 
 
-class Ellipse():
+class Ellipse(object):
     """
     This class provides the main access point to the isophote fitting algorithm.
 

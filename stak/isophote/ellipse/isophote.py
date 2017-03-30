@@ -20,7 +20,7 @@ def print_header():
     print('#')
 
 
-class Isophote:
+class Isophote(object):
     """
     This class is basically a container that holds the results of a single isophote fit.
     The actual extracted sample at the given isophote (sampled intensities along the
