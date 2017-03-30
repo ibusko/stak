@@ -12,6 +12,8 @@ from stak.isophote.util.build_test_data import build
 
 TEST_DATA = "data/"
 
+verb = False
+
 
 class TestModel(unittest.TestCase):
 
@@ -21,9 +23,9 @@ class TestModel(unittest.TestCase):
         image = test_data[0].data[0]
 
         g = Geometry(530., 511, 10., 0.1, 10./180.*np.pi)
-        ellipse = Ellipse(image, geometry=g, verbose=False, threshold=1.e5)
-        isophote_list = ellipse.fit_image(verbose=False)
-        model = build_model(image, isophote_list, fill=np.mean(image[10:100,10:100]), verbose=False)
+        ellipse = Ellipse(image, geometry=g, verbose=verb, threshold=1.e5)
+        isophote_list = ellipse.fit_image(verbose=verb)
+        model = build_model(image, isophote_list, fill=np.mean(image[10:100,10:100]), verbose=verb)
 
         self.assertEqual(image.shape, model.shape)
 
@@ -36,9 +38,9 @@ class TestModel(unittest.TestCase):
         image = build(eps=0.5, pa=np.pi/3., noise=1.e-2)
 
         g = Geometry(256., 256., 10., 0.5, np.pi/3.)
-        ellipse = Ellipse(image, geometry=g, verbose=False, threshold=1.e5)
-        isophote_list = ellipse.fit_image(verbose=False)
-        model = build_model(image, isophote_list, fill=np.mean(image[0:50,0:50]), verbose=False)
+        ellipse = Ellipse(image, geometry=g, verbose=verb, threshold=1.e5)
+        isophote_list = ellipse.fit_image(verbose=verb)
+        model = build_model(image, isophote_list, fill=np.mean(image[0:50,0:50]), verbose=verb)
 
         self.assertEqual(image.shape, model.shape)
 

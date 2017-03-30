@@ -46,3 +46,13 @@ class TestSample(unittest.TestCase):
         array = np.array([])
         self.assertEqual(type(x), type(array))
         self.assertEqual(type(y), type(array))
+
+    def test_sclip(self):
+        sample = Sample(test_data, 50., nclip=3)
+        sample.update()
+
+        x, y = sample.coordinates()
+
+        array = np.array([])
+        self.assertEqual(type(x), type(array))
+        self.assertEqual(type(y), type(array))

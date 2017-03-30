@@ -231,7 +231,8 @@ class Sample(object):
         if self.nclip > 0:
 
             for iter in range(self.nclip):
-                angles, radii, intensities = self._iter_sigma_clip(angles.copy(), radii.copy(), intensities.copy())
+                # do not use list.copy()! must be python2-compliant.
+                angles, radii, intensities = self._iter_sigma_clip(angles[:], radii[:], intensities[:])
 
         return np.array(angles), np.array(radii), np.array(intensities)
 
