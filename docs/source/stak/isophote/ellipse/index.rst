@@ -41,8 +41,14 @@ Reference/API
 =============
 
 .. automodapi:: stak.isophote.ellipse
+.. automodapi:: stak.isophote.ellipse.ellipse
+.. automodapi:: stak.isophote.ellipse.isophote
+.. automodapi:: stak.isophote.ellipse.sample
+.. automodapi:: stak.isophote.ellipse.fitter
+.. automodapi:: stak.isophote.ellipse.geometry
 .. automodapi:: stak.isophote.ellipse.integrator
 .. automodapi:: stak.isophote.ellipse.harmonics
+.. automodapi:: stak.isophote.ellipse.centerer
 .. automodapi:: stak.isophote.model
 
 
